@@ -32,6 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -42,9 +51,9 @@ const upload_middleware_1 = require("../middleware/upload.middleware");
 const user_model_1 = __importStar(require("../models/user.model"));
 const router = express_1.default.Router();
 // Get user by ID
-router.get('/:id', (async (req, res) => {
+router.get('/:id', ((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = await user_model_1.default.findById(req.params.id).select('-password');
+        const user = yield user_model_1.default.findById(req.params.id).select('-password');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -58,12 +67,12 @@ router.get('/:id', (async (req, res) => {
             res.status(500).json({ message: 'An unknown error occurred' });
         }
     }
-}));
+})));
 // Update user profile picture
-router.put('/profile', auth_middleware_1.authMiddleware, upload_middleware_1.uploadProfilePicture, (async (req, res) => {
+router.put('/profile', auth_middleware_1.authMiddleware, upload_middleware_1.uploadProfilePicture, ((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const updateData = req.file ? { profilePicture: req.file.filename } : {};
-        const updatedUser = await user_model_1.default.findByIdAndUpdate(req.userId, { $set: updateData }, { new: true, runValidators: true }).select('-password');
+        const updatedUser = yield user_model_1.default.findByIdAndUpdate(req.userId, { $set: updateData }, { new: true, runValidators: true }).select('-password');
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -77,11 +86,11 @@ router.put('/profile', auth_middleware_1.authMiddleware, upload_middleware_1.upl
             res.status(500).json({ message: 'An unknown error occurred' });
         }
     }
-}));
+})));
 // Get all users (admin only)
-router.get('/', auth_middleware_1.authMiddleware, (0, auth_middleware_1.authorizeRoles)(user_model_1.UserRole.ADMIN), (async (req, res) => {
+router.get('/', auth_middleware_1.authMiddleware, (0, auth_middleware_1.authorizeRoles)(user_model_1.UserRole.ADMIN), ((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = await user_model_1.default.find().select('-password');
+        const users = yield user_model_1.default.find().select('-password');
         res.status(200).json(users);
     }
     catch (error) {
@@ -92,5 +101,5 @@ router.get('/', auth_middleware_1.authMiddleware, (0, auth_middleware_1.authoriz
             res.status(500).json({ message: 'An unknown error occurred' });
         }
     }
-}));
+})));
 exports.default = router;
