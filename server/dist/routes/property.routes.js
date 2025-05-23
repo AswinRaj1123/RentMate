@@ -11,8 +11,12 @@ const user_model_1 = require("../models/user.model");
 const router = express_1.default.Router();
 // Property routes
 router.post('/', auth_middleware_1.authMiddleware, (0, auth_middleware_1.authorizeRoles)(user_model_1.UserRole.LANDLORD, user_model_1.UserRole.ADMIN), upload_middleware_1.uploadPropertyImages, property_controller_1.createProperty);
-router.get('/', property_controller_1.getAllProperties);
-router.get('/:id', property_controller_1.getPropertyById);
+router.get('/', property_controller_1.getProperties);
+router.get('/:id', property_controller_1.getProperty);
 router.put('/:id', auth_middleware_1.authMiddleware, upload_middleware_1.uploadPropertyImages, property_controller_1.updateProperty);
 router.delete('/:id', auth_middleware_1.authMiddleware, property_controller_1.deleteProperty);
+// Get properties by landlord
+router.get('/landlord/:landlordId', property_controller_1.getLandlordProperties);
+// Get my properties (for landlords)
+router.get('/my/properties', auth_middleware_1.authMiddleware, (0, auth_middleware_1.authorizeRoles)(user_model_1.UserRole.LANDLORD, user_model_1.UserRole.ADMIN), property_controller_1.getMyProperties);
 exports.default = router;

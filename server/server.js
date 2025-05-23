@@ -1,22 +1,49 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const cors_1 = __importDefault(require("cors"));
-const morgan_1 = __importDefault(require("morgan"));
-const path_1 = __importDefault(require("path"));
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const path = require('path');
+
 // Import routes
-const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
-const property_routes_1 = __importDefault(require("./routes/property.routes"));
-const user_routes_1 = __importDefault(require("./routes/user.routes"));
-const lease_routes_1 = __importDefault(require("./routes/lease.routes"));
-const rentShare_routes_1 = __importDefault(require("./routes/rentShare.routes"));
-// Load environment variables
-dotenv_1.default.config();
+const authRoutes = require('./routes/auth.routes');
+const propertyRoutes = require('./routes/property.routes');
+const leaseRoutes = require('./routes/lease.routes');
+const rentShareRoutes = require('./routes/rentShare.routes');
+const userRoutes = require('./routes/user.routes');
+
+dotenv.config();
+
+// Create Express server
+const app = express();
+
+// Express configuration
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/properties', propertyRoutes);
+app.use('/api/leases', leaseRoutes);
+app.use('/api/rent-shares', rentShareRoutes);
+app.use('/api/users', userRoutes);
+
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/rentmate')
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+  });
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 // Initialize Express app
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
