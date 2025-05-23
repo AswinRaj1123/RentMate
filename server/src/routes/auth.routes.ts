@@ -1,7 +1,7 @@
 import express from 'express';
-import { register, login, getAuthUser } from '../../controllers/auth.controller';
-import { authMiddleware } from '../../middleware/auth.middleware';
-import { uploadProfilePicture } from '../../middleware/upload.middleware';
+import { register, login, getAuthUser } from '../controllers/auth.controller';
+import { authMiddleware } from '../middleware/auth.middleware';
+import { uploadProfilePicture } from '../middleware/upload.middleware';
 import { RequestHandler } from '../types/express';
 
 const router = express.Router();
