@@ -11,6 +11,8 @@
 const express = require("express");
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const morgan = require("morgan");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const uri = "mongodb+srv://aswinraj868_db_user:4MIltIc2G4onDB2j@rentmate.wtblwkg.mongodb.net/?retryWrites=true&w=majority&appName=RentMate";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -61,9 +63,65 @@ app.get("/health", (req, res) => {
     timestamp: new Date()
   });
 });
-app.get("/", (req, res) => {
-  res.send("Hello, RentMate Server is running 🚀");
+
+mongoose.connect("mongodb://127.0.0.1:27017/rentmate", 
+// {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }
+)
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.error("❌ MongoDB Connection Error:", err));
+
+
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  phone: { type: String, required: true },
+  password: { type: String, required: true },
+  gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
+  occupation: { type: String, required: true },
+  role: { type: String, enum: ["Tenant", "Landlord", "Admin"], required: true }
+}, { collection: "users" });
+
+const User = mongoose.model("User", userSchema);
+
+
+
+// ✅ API: Create New User
+app.post("/api/users", async (req, res) => {
+  try {
+    const { name, email, phone, password, gender, occupation, role } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const newUser = new User({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+      gender,
+      occupation,
+      role,
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: "User created successfully", userId: newUser._id });
+
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
+
 
 // Start server
 app.listen(PORT, () => {
