@@ -64,7 +64,7 @@ app.get("/health", (req, res) => {
   });
 });
 
-mongoose.connect("mongodb://127.0.0.1:27017/rentmate", 
+mongoose.connect(uri , 
 // {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
@@ -121,6 +121,50 @@ app.post("/api/users", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+const jwt = require("jsonwebtoken");
+
+// Secret key (store in .env in production)
+const JWT_SECRET = "your_jwt_secret_key";
+
+// API: Login
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password, rememberMe } = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid email or password" });
+    }
+
+    // Check password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid email or password" });
+    }
+
+    // Expiry: 1h or 7d
+    const tokenExpiry = rememberMe ? "7d" : "1h";
+
+    // Generate JWT
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      JWT_SECRET,
+      { expiresIn: tokenExpiry }
+    );
+
+    res.status(200).json({
+      message: "✅ Login successful",
+      token,
+      expiresIn: tokenExpiry
+    });
+  } catch (err) {
+    console.error("❌ Login Error:", err);
+    res.status(500).json({ error: "Failed to login" });
+  }
+});
+
 
 
 // Start server
