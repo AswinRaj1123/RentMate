@@ -12,3 +12,326 @@
   --semantic-data-font-family: "Verdana", sans-serif;
   --single-line-body-base-font-family: "Inter", sans-serif;
 }
+
+/* @tailwind components;
+@tailwind utilities;
+ */
+@layer components {
+    .all-\[unset\] {
+        all: unset;
+    }
+}
+
+:root {
+    --base-02: rgba(9, 9, 20, 1);
+    --blue-gray400: rgba(148, 163, 184, 1);
+    --body-base-font-family: "Inter", Helvetica;
+    --body-base-font-size: 16px;
+    --body-base-font-style: normal;
+    --body-base-font-weight: 400;
+    --body-base-letter-spacing: 0px;
+    --body-base-line-height: 139.9999976158142%;
+    --bold-13px-font-family: "Poppins", Helvetica;
+    --bold-13px-font-size: 14px;
+    --bold-13px-font-style: normal;
+    --bold-13px-font-weight: 600;
+    --bold-13px-letter-spacing: 0px;
+    --bold-13px-line-height: 22px;
+    --bold-52px-font-family: "Poppins", Helvetica;
+    --bold-52px-font-size: 52px;
+    --bold-52px-font-style: normal;
+    --bold-52px-font-weight: 600;
+    --bold-52px-letter-spacing: -2px;
+    --bold-52px-line-height: 62px;
+    --regular-13px-font-family: "Poppins", Helvetica;
+    --regular-13px-font-size: 14px;
+    --regular-13px-font-style: normal;
+    --regular-13px-font-weight: 400;
+    --regular-13px-letter-spacing: 0px;
+    --regular-13px-line-height: 22px;
+    --roboto-bold-font-family: "Roboto", Helvetica;
+    --roboto-bold-font-size: 28px;
+    --roboto-bold-font-style: normal;
+    --roboto-bold-font-weight: 700;
+    --roboto-bold-letter-spacing: 0px;
+    --roboto-bold-line-height: normal;
+    --roboto-medium-font-family: "Roboto", Helvetica;
+    --roboto-medium-font-size: 16px;
+    --roboto-medium-font-style: normal;
+    --roboto-medium-font-weight: 500;
+    --roboto-medium-letter-spacing: 0px;
+    --roboto-medium-line-height: normal;
+    --semantic-cell-font-family: "Roboto", Helvetica;
+    --semantic-cell-font-size: 15.75px;
+    --semantic-cell-font-style: normal;
+    --semantic-cell-font-weight: 500;
+    --semantic-cell-letter-spacing: 0px;
+    --semantic-cell-line-height: normal;
+    --semantic-data-font-family: "Roboto", Helvetica;
+    --semantic-data-font-size: 16px;
+    --semantic-data-font-style: normal;
+    --semantic-data-font-weight: 400;
+    --semantic-data-letter-spacing: 0px;
+    --semantic-data-line-height: normal;
+    --single-line-body-base-font-family: "Inter", Helvetica;
+    --single-line-body-base-font-size: 16px;
+    --single-line-body-base-font-style: normal;
+    --single-line-body-base-font-weight: 400;
+    --single-line-body-base-letter-spacing: 0px;
+    --single-line-body-base-line-height: 100%;
+}
+
+:root {
+    --animate-spin: spin 1s linear infinite;
+}
+
+.animate-fade-in {
+    animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-fade-up {
+    animation: fade-up 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-marquee {
+    animation: marquee var(--duration) infinite linear;
+}
+
+.animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
+}
+
+.animate-shimmer {
+    animation: shimmer 8s infinite;
+}
+
+.animate-spin {
+    animation: var(--animate-spin);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes image-glow {
+    0% {
+        opacity: 0;
+        animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
+    }
+
+    10% {
+        opacity: 0.7;
+        animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
+    }
+
+    to {
+        opacity: 0.4;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes shimmer {
+    0%,
+    90%,
+    to {
+        background-position: calc(-100% - var(--shimmer-width)) 0;
+    }
+
+    30%,
+    60% {
+        background-position: calc(100% + var(--shimmer-width)) 0;
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(0);
+    }
+
+    to {
+        transform: translateX(calc(-100% - var(--gap)));
+    }
+}
+
+@keyframes marquee-vertical {
+    0% {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(calc(-100% - var(--gap)));
+    }
+}
+
+/* main_page.jsx file CSS*/
+
+@layer components {
+    .all-\[unset\] {
+        all: unset;
+    }
+}
+
+:root {
+    --roboto-bold-font-family: "Roboto", Helvetica;
+    --roboto-bold-font-size: 28px;
+    --roboto-bold-font-style: normal;
+    --roboto-bold-font-weight: 700;
+    --roboto-bold-letter-spacing: 0px;
+    --roboto-bold-line-height: normal;
+    --roboto-medium-font-family: "Roboto", Helvetica;
+    --roboto-medium-font-size: 16px;
+    --roboto-medium-font-style: normal;
+    --roboto-medium-font-weight: 500;
+    --roboto-medium-letter-spacing: 0px;
+    --roboto-medium-line-height: normal;
+    --semantic-cell-font-family: "Roboto", Helvetica;
+    --semantic-cell-font-size: 15.75px;
+    --semantic-cell-font-style: normal;
+    --semantic-cell-font-weight: 500;
+    --semantic-cell-letter-spacing: 0px;
+    --semantic-cell-line-height: normal;
+    --semantic-data-font-family: "Roboto", Helvetica;
+    --semantic-data-font-size: 16px;
+    --semantic-data-font-style: normal;
+    --semantic-data-font-weight: 400;
+    --semantic-data-letter-spacing: 0px;
+    --semantic-data-line-height: normal;
+    --single-line-body-base-font-family: "Inter", Helvetica;
+    --single-line-body-base-font-size: 16px;
+    --single-line-body-base-font-style: normal;
+    --single-line-body-base-font-weight: 400;
+    --single-line-body-base-letter-spacing: 0px;
+    --single-line-body-base-line-height: 100%;
+}
+
+:root {
+    --animate-spin: spin 1s linear infinite;
+}
+
+.animate-fade-in {
+    animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-fade-up {
+    animation: fade-up 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-marquee {
+    animation: marquee var(--duration) infinite linear;
+}
+
+.animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
+}
+
+.animate-shimmer {
+    animation: shimmer 8s infinite;
+}
+
+.animate-spin {
+    animation: var(--animate-spin);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes image-glow {
+    0% {
+        opacity: 0;
+        animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
+    }
+
+    10% {
+        opacity: 0.7;
+        animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
+    }
+
+    to {
+        opacity: 0.4;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes shimmer {
+    0%,
+    90%,
+    to {
+        background-position: calc(-100% - var(--shimmer-width)) 0;
+    }
+
+    30%,
+    60% {
+        background-position: calc(100% + var(--shimmer-width)) 0;
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(0);
+    }
+
+    to {
+        transform: translateX(calc(-100% - var(--gap)));
+    }
+}
+
+@keyframes marquee-vertical {
+    0% {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(calc(-100% - var(--gap)));
+    }
+}
