@@ -181,6 +181,23 @@ app.post("/api/property", async (req, res) => {
 });
 
 // ----------------------------------------------------------------------------------------------
+// GET API to fetch properties by userId
+app.get("/api/property/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const properties = await Property.find({ userId });
+
+    if (!properties || properties.length === 0) {
+      return res.status(404).json({ message: "No properties found for this user" });
+    }
+
+    res.status(200).json({ properties });
+  } catch (err) {
+    console.error("❌ Error fetching properties:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
