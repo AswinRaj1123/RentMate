@@ -1,61 +1,28 @@
-
-// 
-// 
-
-
-
-
-// ____________________________________________________________________________________
-
 // Import dependencies
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+// MongoDB connection URI
 const uri = "mongodb+srv://aswinraj868_db_user:4MIltIc2G4onDB2j@rentmate.wtblwkg.mongodb.net/?retryWrites=true&w=majority&appName=RentMate";
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
 
 // Initialize express app
 const app = express();
-
-// Define port
 const PORT = 3000;
 
-// Middleware to parse JSON requests
+// Middleware
 app.use(express.json());
-
-// Log every request
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
-// Simple route
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
+// ✅ Connect to MongoDB
+mongoose.connect(uri)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => console.error("❌ MongoDB Connection Error:", err));
+
+// Health check API
 app.get("/health", (req, res) => {
   res.json({
     status: "OK",
@@ -64,16 +31,8 @@ app.get("/health", (req, res) => {
   });
 });
 
-mongoose.connect(uri , 
-// {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// }
-)
-.then(() => console.log("✅ MongoDB Connected"))
-.catch(err => console.error("❌ MongoDB Connection Error:", err));
-
-
+// ----------------------------------------------------------------------------------------------
+// User Schema & Model
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -86,9 +45,25 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+// ----------------------------------------------------------------------------------------------
+// Authentication Middleware
+const JWT_SECRET = "your_jwt_secret_key"; // TODO: move to .env in production
 
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Expecting "Bearer <token>"
 
-// ✅ API: Create New User
+  if (!token) return res.status(401).json({ error: "No token, authorization denied" });
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ error: "Invalid or expired token" });
+    req.user = decoded; // { userId, role }
+    next();
+  });
+}
+
+// ----------------------------------------------------------------------------------------------
+// API: Register User
 app.post("/api/users", async (req, res) => {
   try {
     const { name, email, phone, password, gender, occupation, role } = req.body;
@@ -122,11 +97,7 @@ app.post("/api/users", async (req, res) => {
   }
 });
 
-const jwt = require("jsonwebtoken");
-
-// Secret key (store in .env in production)
-const JWT_SECRET = "your_jwt_secret_key";
-
+// ----------------------------------------------------------------------------------------------
 // API: Login
 app.post("/api/login", async (req, res) => {
   try {
@@ -165,9 +136,52 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// ----------------------------------------------------------------------------------------------
+// Property Schema & Model
+// Define Property Schema
+const propertySchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  title: { type: String, required: true },
+  numberOfTenants: { type: Number, required: true },
+  location: { type: String, required: true },
+  rent: { type: Number, required: true },
+  description: { type: String },
+  amenities: { type: [String] }, // Array of amenities
+  photos: { type: [String] }, // Array of photo URLs
+}, { timestamps: true });
 
+const Property = mongoose.model("Property", propertySchema, "property");
 
+// POST API to add new property
+app.post("/api/property", async (req, res) => {
+  try {
+    const { userId, title, numberOfTenants, location, rent, description, amenities, photos } = req.body;
+
+    if (!userId || !title || !numberOfTenants || !location || !rent) {
+      return res.status(400).json({ error: "Required fields are missing" });
+    }
+
+    const newProperty = new Property({
+      userId,
+      title,
+      numberOfTenants,
+      location,
+      rent,
+      description,
+      amenities,
+      photos,
+    });
+
+    const savedProperty = await newProperty.save();
+    res.status(201).json({ message: "Property saved successfully", property: savedProperty });
+  } catch (err) {
+    console.error("❌ Error saving property:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// ----------------------------------------------------------------------------------------------
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
