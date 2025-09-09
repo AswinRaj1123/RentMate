@@ -202,3 +202,123 @@ app.get("/api/property/:userId", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+
+// ----------------------------------------------------------------------------------------------
+// OTP Schema & Model
+const nodemailer = require("nodemailer");
+
+const otpSchema = new mongoose.Schema({
+  email: { type: String, required: true },
+  otp: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now, expires: 300 } // OTP expires in 5 minutes
+});
+const OTP = mongoose.model("OTP", otpSchema, "otp");
+
+// ----------------------------------------------------------------------------------------------
+// Nodemailer Transporter (Gmail)
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  port: 456,
+  secure: true,
+  auth: {
+    user: "techforindia.net@gmail.com",       // ✅ your Gmail address
+    pass: "cgwk eikk aowe ozbf"           // ✅ App Password from Google
+  },
+  tls: {
+    rejectUnauthorized: false // ✅ allow self-signed certs
+  }
+});
+
+// Helper: Generate 4-digit OTP
+function generateOTP() {
+  return Math.floor(1000 + Math.random() * 9000).toString(); // 4 digit number
+}
+
+// Helper: Send OTP Email
+async function sendOTPEmail(email, otp) {
+  const mailOptions = {
+    from: '"RentMate" <your_email@gmail.com>', // sender name + email
+    to: email,
+    subject: "Your OTP Code - RentMate",
+    text: `Your OTP code is ${otp}. It will expire in 5 minutes.`,
+    html: `<p>Your OTP code is <b>${otp}</b>. It will expire in 5 minutes.</p>`,
+  };
+
+  await transporter.sendMail(mailOptions);
+  console.log(`📧 OTP sent to ${email}`);
+}
+
+// ----------------------------------------------------------------------------------------------
+// API: Request OTP (Register Step 1 - Send OTP)
+app.post("/api/request-otp", async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: "Email is required" });
+
+    // Generate new OTP
+    const otp = generateOTP();
+
+    // Remove any existing OTP for this email
+    await OTP.deleteMany({ email });
+
+    // Save new OTP
+    const newOTP = new OTP({ email, otp });
+    await newOTP.save();
+
+    // Send OTP via email
+    await sendOTPEmail(email, otp);
+
+    res.status(200).json({ message: "OTP sent successfully" });
+  } catch (err) {
+    console.error("❌ OTP Request Error:", err);
+    res.status(500).json({ error: "Failed to send OTP" });
+  }
+});
+
+// ----------------------------------------------------------------------------------------------
+// API: Verify OTP (Register Step 2 - Verify OTP)
+app.post("/api/verify-otp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    if (!email || !otp) return res.status(400).json({ error: "Email and OTP are required" });
+
+    const existingOTP = await OTP.findOne({ email, otp });
+    if (!existingOTP) {
+      return res.status(400).json({ error: "Invalid or expired OTP" });
+    }
+
+    // OTP is valid → delete OTP after verification
+    await OTP.deleteMany({ email });
+
+    res.status(200).json({ message: "OTP verified successfully" });
+  } catch (err) {
+    console.error("❌ OTP Verification Error:", err);
+    res.status(500).json({ error: "Failed to verify OTP" });
+  }
+});
+
+// ----------------------------------------------------------------------------------------------
+// API: Resend OTP (if user didn’t receive OTP)
+app.post("/api/resend-otp", async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: "Email is required" });
+
+    // Generate new OTP
+    const otp = generateOTP();
+
+    // Replace old OTP
+    await OTP.deleteMany({ email });
+    const newOTP = new OTP({ email, otp });
+    await newOTP.save();
+
+    // Send OTP via email
+    await sendOTPEmail(email, otp);
+
+    res.status(200).json({ message: "New OTP sent successfully" });
+  } catch (err) {
+    console.error("❌ Resend OTP Error:", err);
+    res.status(500).json({ error: "Failed to resend OTP" });
+  }
+});
