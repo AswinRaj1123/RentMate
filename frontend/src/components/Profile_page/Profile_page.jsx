@@ -9,17 +9,24 @@ export const ProfilePage = () => {
   };
 
   return (
+<<<<<<< Updated upstream
     <div className="h-screen w-screen bg-[#f5f7fa] flex">
       {/* Sidebar */}
       <div className="flex flex-col justify-between bg-white shadow-md w-72 h-full p-6">
         {/* Logo */}
         <div className="flex justify-center mt-6">
+=======
+    // <div className="bg-[#f5f7fa] grid justify-items-center items-start w-screen">
+    //   <div className="bg-[#f5f7fa] overflow-hidden w-[1512px] h-[982px]">
+        <div className="relative w-[281px] h-[982px] top-[5px] bg-white rounded shadow-md">
+>>>>>>> Stashed changes
           <img
             src={rentmeLogo2}
             alt="Rentme Logo"
             className="w-40 h-40 object-contain"
           />
         </div>
+<<<<<<< Updated upstream
 
         {/* Profile Info */}
         <div className="flex flex-col items-center">
@@ -42,5 +49,9 @@ export const ProfilePage = () => {
         </button>
       </div>
     </div>
+=======
+    //   </div>
+    // </div>
+>>>>>>> Stashed changes
   );
 };
