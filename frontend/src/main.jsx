@@ -8,6 +8,9 @@ import { OtpPage } from "./components/Otp_page/Otp_page.jsx";
 import {ProfilePage} from "./components/Profile_page/Profile_page.jsx";
 import { PropertyDetails } from "./User/Property_page.jsx";
 import { SearchResultPage } from "./User/Search_page.jsx";
+import { AdminPage } from "./Admin/admin_page.jsx";
+import {PropertyPage} from "./Landlord/Add_Property_page.jsx";
+import { SignUpPage } from "./components/Signup_page/Signup_page.jsx";
 // import { MyProperties } from "./Landlord/My_property.jsx";
 import App from "./App.jsx";
 
@@ -21,8 +24,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/property" element={<PropertyDetails />} />
         <Route path="/search" element={<SearchResultPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/addproperty" element={<PropertyPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         {/* <Route path="/myproperties" element={<MyProperties />} /> */}
-        <Route path="/app" element={<App />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
