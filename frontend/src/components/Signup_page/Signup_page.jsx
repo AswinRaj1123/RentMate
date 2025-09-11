@@ -1,190 +1,146 @@
 import React from "react";
-import Circle from "../../assets/circle.png";
-// import Frame from "./Frame";
-// import Property1Default from "./Property1Default";
-// import PropertyDefaultWrapper from "./PropertyDefaultWrapper";
-import image1 from "../../assets/flag.png";
-import loginBackgroundDesign2 from "../../assets/login-background-design-1.png";
 import rentmeLogoTransparent1 from "../../assets/rentme-logo-transparent-1.png";
+import flag from "../../assets/flag.png";
 
 export const SignUpPage = () => {
-    return (
-        <div className="bg-[#f5f7fa] grid justify-items-center [align-items:start] w-screen">
-            <div className="bg-[#f5f7fa] w-[1512px] h-[982px] relative">
-                <img
-                    className="absolute w-36 h-36 top-[27px] left-[684px] aspect-[1] object-cover"
-                    alt="Rentme logo"
-                    src={rentmeLogoTransparent1}
-                />
+  return (
+    <div className="bg-[#f5f7fa] h-screen w-screen flex items-center justify-center px-4">
+      {/* Card */}
+      <div className="bg-white w-full max-w-md rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8 flex flex-col items-center">
+        
+        {/* Logo */}
+        <img
+          src={rentmeLogoTransparent1}
+          alt="RentMate Logo"
+          className="w-20 h-20 sm:w-24 sm:h-24 mb-4"
+        />
 
-                <div className="absolute w-[533px] h-[662px] top-[274px] left-[489px]">
-                    <div className="absolute w-[533px] h-[662px] top-0 left-0">
-                        <div className="relative h-[662px]">
-                            <div className="absolute w-[533px] h-[662px] top-0 left-0">
-                                <div className="h-[662px]">
-                                    <div className="relative w-[535px] h-[662px]">
-                                        <div className="absolute w-[535px] h-[662px] top-0 left-0">
-                                            <div className="relative w-[533px] h-[662px] bg-basewhite rounded-[20px] border border-solid border-[#d1d9e6] shadow-[0px_10px_15px_#00000008,2px_4px_4px_#0000000f]">
-                                                
-                                                {/* Input Fields Section */}
-                                                <div className="absolute w-[482px] h-[424px] top-[15px] left-[26px]">
-                                                    {/* Occupation */}
-                                                    <div className="flex flex-col w-[234px] h-[90px] items-start gap-2 absolute top-[334px] left-[241px]">
-                                                        <div className="relative self-stretch mt-[-1.00px] font-body-base text-[#1e1e1e]">
-                                                            Occupation
-                                                        </div>
-                                                    </div>
+        {/* Heading */}
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">
+          Create Account
+        </h1>
 
-                                                    {/* Gender */}
-                                                    <div className="w-[234px] h-[90px] top-[334px] flex flex-col items-start gap-2 absolute left-0">
-                                                        <div className="relative self-stretch mt-[-1.00px] font-body-base text-[#1e1e1e]">
-                                                            Gender
-                                                        </div>
-                                                    </div>
+        {/* Form */}
+        <form className="w-full space-y-4 flex-1 flex flex-col justify-center">
+          {/* Name */}
+          <div>
+            <label htmlFor="name" className="block text-gray-700 mb-1 text-sm">
+              Name
+            </label>
+            <input
+              id="name"
+              type="text"
+              placeholder="Type your First Name & Last Name here"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+            />
+          </div>
 
-                                                    {/* Name */}
-                                                    <div className="w-[482px] h-[89.36px] top-0 flex flex-col items-start gap-2 absolute left-0">
-                                                        <label
-                                                            className="relative self-stretch mt-[-1.00px] font-body-base text-[#1e1e1e]"
-                                                            htmlFor="input-1"
-                                                        >
-                                                            Name
-                                                        </label>
-                                                        <input
-                                                            className="min-w-60 px-4 py-3 bg-white rounded-lg border border-solid border-[#d1d9e6]"
-                                                            id="input-1"
-                                                            placeholder="Type your First Name & Last Name here"
-                                                            type="text"
-                                                        />
-                                                    </div>
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block text-gray-700 mb-1 text-sm">
+              Email ID
+            </label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Type your Email ID here"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+            />
+          </div>
 
-                                                    {/* Email */}
-                                                    <div className="w-[482px] h-[89.36px] top-[82px] flex flex-col items-start gap-2 absolute left-0">
-                                                        <label
-                                                            className="relative self-stretch mt-[-1.00px] font-body-base text-[#1e1e1e]"
-                                                            htmlFor="input-2"
-                                                        >
-                                                            Email ID
-                                                        </label>
-                                                        <input
-                                                            className="min-w-60 px-4 py-3 bg-white rounded-lg border border-solid border-[#d1d9e6]"
-                                                            id="input-2"
-                                                            placeholder="Type your Email ID here"
-                                                            type="email"
-                                                        />
-                                                    </div>
-
-                                                    {/* Password */}
-                                                    <div className="w-[482px] h-[89.36px] top-[245px] flex flex-col items-start gap-2 absolute left-0">
-                                                        <div className="relative self-stretch font-body-base text-[#1e1e1e]">
-                                                            Password
-                                                        </div>
-                                                        <div className="flex min-w-60 items-center px-4 py-3 bg-white rounded-lg border border-solid border-[#d1d9e6]">
-                                                            <div className="text-[#b3b3b3]">
-                                                                Type your Password here
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Phone Number */}
-                                                    <div className="absolute w-[482px] h-[82px] top-[163px] left-0">
-                                                        <div className="relative h-[82px]">
-                                                            <div className="w-[482px] flex flex-col gap-2 absolute left-0">
-                                                                <div className="font-body-base text-[#1e1e1e]">
-                                                                    Phone Number
-                                                                </div>
-                                                                <div className="flex items-center px-4 py-3 bg-white rounded-lg border border-solid border-[#d1d9e6]">
-                                                                    <div className="flex-1 text-[#1e1e1e]">
-                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+91
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <img
-                                                                className="absolute w-[34px] h-[23px] top-[37px] left-4 object-cover"
-                                                                alt="flag"
-                                                                src={image1}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Leasing Out Button */}
-                                                <div className="inline-flex h-[38px] items-start absolute top-[444px] left-[315px] rounded-lg">
-                                                    <div className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-50 rounded-lg overflow-hidden">
-                                                        <img src={Circle} alt="circle icon" className="w-5 h-5" />
-                                                        <div className="text-primary-700 text-sm">
-                                                            Leasing Out?
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Terms & Conditions */}
-                                                <div className="absolute w-[364px] h-[26px] top-[498px] left-[25px]">
-                                                    <p className="text-sm">
-                                                        <span className="text-[#080814]">I agree with the </span>
-                                                        <span className="text-blue-600">Terms & Conditions</span>
-                                                        <span className="text-[#080814]"> of RentMate</span>
-                                                    </p>
-                                                    <div className="absolute w-[19px] h-[22px] top-0 left-0 rounded-[5px] border border-solid border-blue-gray400" />
-                                                </div>
-
-                                                {/* Create Account Button */}
-                                                <div className="flex w-[482px] h-[51px] items-center gap-4 absolute top-[538px] left-[25px]">
-                                                    <button className="flex-1 p-3 bg-[#2e86de] rounded-lg border border-solid border-[#1b4f9b] text-white">
-                                                        CREATE ACCOUNT
-                                                    </button>
-                                                </div>
-
-                                                {/* Sign In Link */}
-                                                <p className="absolute w-[444px] h-[26px] top-[599px] left-[43px] text-sm text-center">
-                                                    <span className="text-zinc-500">Have an account? </span>
-                                                    <span className="font-bold text-blue-600 cursor-pointer">
-                                                        Sign in
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        {/* Unused components commented out */}
-                                        {/*
-                                        <div className="inline-flex items-start absolute top-[445px] left-[54px] rounded-lg">
-                                            <div className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-50 rounded-lg overflow-hidden">
-                                                <Property1Default className="!relative !w-5 !h-5" />
-                                                <div className="text-primary-700 text-sm">
-                                                    Looking for a Roomate?
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <Frame
-                                            className="!left-[26px] !absolute !top-[380px]"
-                                            property1="default"
-                                        />
-
-                                        <PropertyDefaultWrapper
-                                            className="!left-[286px] !absolute !top-[378px]"
-                                            property1="default"
-                                        />
-                                        */}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Heading */}
-                <div className="absolute w-[636px] top-[178px] left-[437px] text-center text-5xl font-bold text-base-02">
-                    Create Account
-                </div>
-
-                {/* Background Image */}
-                <img
-                    className="absolute w-[407px] h-[343px] top-[639px] left-[1105px] object-cover"
-                    alt="Login background"
-                    src={loginBackgroundDesign2}
-                />
+          {/* Phone */}
+          <div>
+            <label htmlFor="phone" className="block text-gray-700 mb-1 text-sm">
+              Phone Number
+            </label>
+            <div className="flex items-center border rounded-lg px-3">
+              <img src={flag} alt="flag" className="w-6 h-4 mr-2" />
+              <span className="mr-2 text-sm">+91</span>
+              <input
+                id="phone"
+                type="text"
+                placeholder="Enter your phone number"
+                className="flex-1 py-2 focus:outline-none text-sm"
+              />
             </div>
-        </div>
-    );
+          </div>
+
+          {/* Password */}
+          <div>
+            <label htmlFor="password" className="block text-gray-700 mb-1 text-sm">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Type your Password here"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+            />
+          </div>
+
+          {/* Gender & Occupation */}
+          <div className="flex gap-3">
+            <div className="w-1/2">
+              <label className="block text-gray-700 mb-1 text-sm">Gender</label>
+              <select className="w-full px-2 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                <option>Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div className="w-1/2">
+              <label className="block text-gray-700 mb-1 text-sm">Occupation</label>
+              <select className="w-full px-2 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                <option>Occupation</option>
+                <option>Student</option>
+                <option>Employee</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Looking or Leasing */}
+          <div className="flex flex-col sm:flex-row gap-3 text-sm">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="option" className="accent-blue-500" />
+              Looking for a Roommate?
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input type="radio" name="option" className="accent-blue-500" />
+              Leasing Out?
+            </label>
+          </div>
+
+          {/* Terms & Conditions */}
+          <div className="flex items-start gap-2 text-sm">
+            <input type="checkbox" className="mt-1 accent-blue-500" />
+            <span>
+              I agree with the{" "}
+              <a href="#" className="text-blue-600 hover:underline">
+                Terms & Conditions
+              </a>{" "}
+              of RentMate
+            </span>
+          </div>
+
+          {/* Create Account Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition text-sm"
+          >
+            CREATE ACCOUNT
+          </button>
+        </form>
+
+        {/* Sign In */}
+        <p className="text-center text-xs sm:text-sm text-gray-600 mt-4">
+          Have an account?{" "}
+          <a href="#" className="text-blue-600 font-semibold hover:underline">
+            Sign in
+          </a>
+        </p>
+      </div>
+    </div>
+  );
 };
