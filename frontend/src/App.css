@@ -1136,3 +1136,204 @@
         transform: translateY(calc(-100% - var(--gap)));
       }
 }
+
+/* add new property.css */
+
+/*@tailwind components;
+@tailwind utilities;*/
+
+@layer components {
+    .all-\[unset\] {
+        all: unset;
+    }
+}
+
+:root {
+    --body-base-font-family: "Inter", Helvetica;
+    --body-base-font-size: 16px;
+    --body-base-font-style: normal;
+    --body-base-font-weight: 400;
+    --body-base-letter-spacing: 0px;
+    --body-base-line-height: 139.9999976158142%;
+    --color-background-brand-default: var(--color-primitives-brand-800);
+    --color-background-brand-hover: var(--color-primitives-brand-900);
+    --color-background-default-default: var(--color-primitives-white-1000);
+    --color-border-brand-default: var(--color-primitives-brand-800);
+    --color-border-default-default: var(--color-primitives-gray-300);
+    --color-primitives-brand-100: rgba(245, 245, 245, 1);
+    --color-primitives-brand-300: rgba(217, 217, 217, 1);
+    --color-primitives-brand-800: rgba(44, 44, 44, 1);
+    --color-primitives-brand-900: rgba(30, 30, 30, 1);
+    --color-primitives-gray-300: rgba(217, 217, 217, 1);
+    --color-primitives-gray-400: rgba(179, 179, 179, 1);
+    --color-primitives-gray-600: rgba(68, 68, 68, 1);
+    --color-primitives-gray-900: rgba(30, 30, 30, 1);
+    --color-primitives-slate-200: rgba(227, 227, 227, 1);
+    --color-primitives-slate-900: rgba(48, 48, 48, 1);
+    --color-primitives-white-1000: rgba(255, 255, 255, 1);
+    --color-primitives-white-400: rgba(255, 255, 255, 0.4);
+    --color-text-brand-on-brand: var(--color-primitives-brand-100);
+    --color-text-default-default: var(--color-primitives-gray-900);
+    --color-text-default-tertiary: var(--color-primitives-gray-400);
+    --color-text-neutral-default: var(--color-primitives-slate-900);
+    --heading-font-family: "Inter", Helvetica;
+    --heading-font-size: 24px;
+    --heading-font-style: normal;
+    --heading-font-weight: 600;
+    --heading-letter-spacing: -0.48px;
+    --heading-line-height: 120.00000476837158%;
+    --single-line-body-base-font-family: "Inter", Helvetica;
+    --single-line-body-base-font-size: 16px;
+    --single-line-body-base-font-style: normal;
+    --single-line-body-base-font-weight: 400;
+    --single-line-body-base-letter-spacing: 0px;
+    --single-line-body-base-line-height: 100%;
+    --size-radius-200: 8px;
+    --size-space-200: 8px;
+    --size-space-300: 12px;
+    --size-space-400: 16px;
+    --size-space-600: 24px;
+}
+
+/*
+
+To enable a theme in your HTML, simply add one of the following data attributes to an HTML element, like so:
+
+<body data-color-mode="SDS-light">
+        <!-- the rest of your content -->
+</body>
+
+You can apply the theme on any DOM node, not just the `body`
+
+*/
+
+[data-color-mode="SDS-light"] {
+    --color-background-brand-default: var(--color-primitives-brand-800);
+    --color-background-brand-hover: var(--color-primitives-brand-900);
+    --color-background-default-default: var(--color-primitives-white-1000);
+    --color-border-brand-default: var(--color-primitives-brand-800);
+    --color-border-default-default: var(--color-primitives-gray-300);
+    --color-text-brand-on-brand: var(--color-primitives-brand-100);
+    --color-text-default-default: var(--color-primitives-gray-900);
+    --color-text-default-tertiary: var(--color-primitives-gray-400);
+    --color-text-neutral-default: var(--color-primitives-slate-900);
+}
+
+[data-color-mode="SDS-dark"] {
+    --color-background-brand-default: var(--color-primitives-brand-100);
+    --color-background-brand-hover: var(--color-primitives-brand-300);
+    --color-background-default-default: var(--color-primitives-gray-900);
+    --color-border-brand-default: var(--color-primitives-brand-100);
+    --color-border-default-default: var(--color-primitives-gray-600);
+    --color-text-brand-on-brand: var(--color-primitives-brand-900);
+    --color-text-default-default: var(--color-primitives-white-1000);
+    --color-text-default-tertiary: var(--color-primitives-white-400);
+    --color-text-neutral-default: var(--color-primitives-slate-200);
+}
+
+:root {
+    --animate-spin: spin 1s linear infinite;
+}
+
+.animate-fade-in {
+    animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-fade-up {
+    animation: fade-up 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-marquee {
+    animation: marquee var(--duration) infinite linear;
+}
+
+.animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
+}
+
+.animate-shimmer {
+    animation: shimmer 8s infinite;
+}
+
+.animate-spin {
+    animation: var(--animate-spin);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes image-glow {
+    0% {
+        opacity: 0;
+        animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
+    }
+
+    10% {
+        opacity: 0.7;
+        animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
+    }
+
+    to {
+        opacity: 0.4;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes shimmer {
+    0%,
+    90%,
+    to {
+        background-position: calc(-100% - var(--shimmer-width)) 0;
+    }
+
+    30%,
+    60% {
+        background-position: calc(100% + var(--shimmer-width)) 0;
+    }
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(0);
+    }
+
+    to {
+        transform: translateX(calc(-100% - var(--gap)));
+    }
+}
+
+@keyframes marquee-vertical {
+    0% {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(calc(-100% - var(--gap)));
+    }
+}
