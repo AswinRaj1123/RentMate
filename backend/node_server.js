@@ -22,6 +22,15 @@ mongoose.connect(uri)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
+  // CORS Middleware
+  const cors = require("cors");
+app.use(cors({
+  origin: "http://localhost:5173", // your React dev server (Vite default)
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
 // Health check API
 app.get("/health", (req, res) => {
   res.json({
