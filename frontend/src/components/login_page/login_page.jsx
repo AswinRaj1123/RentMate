@@ -31,16 +31,25 @@ export const LoginPage = () => {
       }
 
       setSuccess("Login successful ✅");
-      localStorage.setItem("token", data.token); // Save JWT for future requests
-      
-      // Debug logs
-      console.log("User data to store:", data.user);
-      localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
-      console.log("Stored user data:", localStorage.getItem("user"));
 
-      // 👉 Redirect to main search page
-      window.location.href = "/mainsearch";
+      // Save authentication data
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.user.id);
+      localStorage.setItem("role", data.user.role);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
+      console.log("Stored user:", localStorage.getItem("user"));
+
+      // Redirect based on role
+      if (data.user.role === "Landlord") {
+        window.location.href = "/property"; // Landlord → Property page
+      } else if (data.user.role === "Tenant") {
+        window.location.href = "/mainsearch"; // Tenant → Search page
+      } else if (data.user.role === "Admin") {
+        window.location.href = "/admin-dashboard"; // Admin → Dashboard
+      } else {
+        window.location.href = "/"; // Fallback
+      }
     } catch (err) {
       setError(err.message);
     } finally {

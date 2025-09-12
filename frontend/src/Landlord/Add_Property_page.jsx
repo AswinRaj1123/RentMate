@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import arrowBack from "../assets/arrow_back.svg";
 import rentmeLogo1 from "../assets/rentme-logo-transparent-1.png";
-import loginBackgroundDesign2 from "../assets/login-background-design-2.png"; // background image
 
 export const PropertyPage = () => {
-  // Form state
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [rent, setRent] = useState("");
@@ -15,68 +13,84 @@ export const PropertyPage = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Example: get userId from localStorage (set after login)
+  // Get userId from localStorage (must be set after login)
   const userId = localStorage.getItem("userId");
 
-  // Handle photo upload
   const handlePhotoChange = (e) => {
     setPhotos([...e.target.files]);
   };
 
-  // Handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
-    // Prepare amenities as array
-    const amenitiesArr = amenities.split(",").map(a => a.trim()).filter(Boolean);
+    // Ensure userId is present
+    if (!userId) {
+      setMessage("⚠️ You must be logged in to add a property.");
+      setLoading(false);
+      return;
+    }
 
-    // Prepare photos as array of file names
-    const photoNames = photos.map(file => file.name);
+    // Convert amenities into array
+    const amenitiesArr = amenities
+      .split(",")
+      .map((a) => a.trim())
+      .filter(Boolean);
 
-    // Prepare payload
+    const photoNames = photos.map((file) => file.name);
+
     const payload = {
       userId,
       title,
       location,
-      rent,
+      rent: Number(rent), // backend expects number
       description,
       amenities: amenitiesArr,
-      numberOfTenants,
-      photos: photoNames
+      numberOfTenants: Number(numberOfTenants), // backend expects number
+      photos: photoNames,
     };
 
+    console.log("📤 Payload being sent:", payload);
+
     try {
-      console.log("Submitting payload:", payload);
       const res = await fetch("http://localhost:3000/api/property", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
+
       const data = await res.json();
+
       if (res.ok) {
-        setMessage("Property added successfully!");
-        // Reset form
-        setTitle(""); setLocation(""); setRent(""); setDescription("");
-        setAmenities(""); setNumberOfTenants(""); setPhotos([]);
+        setMessage("✅ Property added successfully!");
+        // reset form
+        setTitle("");
+        setLocation("");
+        setRent("");
+        setDescription("");
+        setAmenities("");
+        setNumberOfTenants("");
+        setPhotos([]);
       } else {
-        setMessage(data.error || "Failed to add property");
+        setMessage(data.error || "❌ Failed to add property");
       }
     } catch (err) {
-      setMessage("Server error");
+      console.error("❌ Error submitting property:", err);
+      setMessage("❌ Server error, please try again later");
     }
+
     setLoading(false);
   };
 
   return (
-    <div className="bg-[#f5f7fa] grid justify-items-center [align-items:start] w-screen">
-      <div className="bg-[#f5f7fa] w-[393px] h-[852px] relative">
+    <div className="bg-[#f5f7fa] min-h-screen flex justify-center items-start sm:items-center py-6">
+      <div className="bg-[#f5f7fa] w-full max-w-[393px] sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative rounded-lg shadow-lg">
         {/* Logo */}
         <img
-          className="absolute w-[60px] h-[60px] top-[54px] left-[302px] aspect-[1] object-cover"
+          className="absolute w-[50px] sm:w-[60px] top-6 right-6 sm:right-10 aspect-[1] object-cover"
           alt="Rentme logo"
           src={rentmeLogo1}
         />
@@ -85,12 +99,12 @@ export const PropertyPage = () => {
         <img
           src={arrowBack}
           alt="Back"
-          className="absolute w-[30px] h-[30px] top-[69px] left-[26px] cursor-pointer"
+          className="absolute w-[25px] sm:w-[30px] top-6 left-6 cursor-pointer"
         />
 
-        {/* Form container */}
+        {/* Form */}
         <form
-          className="absolute w-[371px] h-[666px] top-[175px] left-[11px] bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-6 space-y-6 overflow-y-auto"
+          className="mt-24 sm:mt-28 bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[75vh]"
           onSubmit={handleSubmit}
         >
           {/* Title */}
@@ -99,7 +113,7 @@ export const PropertyPage = () => {
             <input
               type="text"
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter property title"
               className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
               required
@@ -112,7 +126,7 @@ export const PropertyPage = () => {
             <input
               type="text"
               value={location}
-              onChange={e => setLocation(e.target.value)}
+              onChange={(e) => setLocation(e.target.value)}
               placeholder="Enter property location"
               className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
               required
@@ -125,7 +139,7 @@ export const PropertyPage = () => {
             <input
               type="number"
               value={rent}
-              onChange={e => setRent(e.target.value)}
+              onChange={(e) => setRent(e.target.value)}
               placeholder="Enter rent amount"
               className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
               required
@@ -137,7 +151,7 @@ export const PropertyPage = () => {
             <label className="block font-medium text-gray-800">Description</label>
             <textarea
               value={description}
-              onChange={e => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter description"
               rows="3"
               className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
@@ -150,7 +164,7 @@ export const PropertyPage = () => {
             <input
               type="text"
               value={amenities}
-              onChange={e => setAmenities(e.target.value)}
+              onChange={(e) => setAmenities(e.target.value)}
               placeholder="Enter amenities (comma separated)"
               className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
             />
@@ -158,10 +172,12 @@ export const PropertyPage = () => {
 
           {/* Number of Tenants */}
           <div>
-            <label className="block font-medium text-gray-800">Number of Tenants</label>
+            <label className="block font-medium text-gray-800">
+              Number of Tenants
+            </label>
             <select
               value={numberOfTenants}
-              onChange={e => setNumberOfTenants(e.target.value)}
+              onChange={(e) => setNumberOfTenants(e.target.value)}
               className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
               required
             >
@@ -196,6 +212,7 @@ export const PropertyPage = () => {
               {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
+
           {message && (
             <div className="text-center text-sm text-red-500 mt-2">{message}</div>
           )}
