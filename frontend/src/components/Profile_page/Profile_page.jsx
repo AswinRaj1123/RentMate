@@ -13,12 +13,20 @@ export const ProfilePage = () => {
       const storedUser = localStorage.getItem("user");
       const storedToken = localStorage.getItem("token");
       
+      console.log("Stored user string:", storedUser); // Debug log
+      console.log("Stored token:", storedToken); // Debug log
+      
       if (storedUser && storedUser !== "undefined") {
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        console.log("Parsed user:", parsedUser); // Debug log
+        setUser(parsedUser);
       } else if (!storedToken) {
         // If no token and no user, redirect to login
+        console.log("No token found, redirecting to login");
         window.location.href = "/login";
         return;
+      } else {
+        console.log("Token found but no user data");
       }
     } catch (error) {
       console.error("Error parsing user data from localStorage:", error);

@@ -24,6 +24,7 @@ export const LoginPage = () => {
       });
 
       const data = await response.json();
+      console.log("Login response data:", data); // Debug log
 
       if (!response.ok) {
         throw new Error(data.error || "Login failed");
@@ -31,7 +32,11 @@ export const LoginPage = () => {
 
       setSuccess("Login successful ✅");
       localStorage.setItem("token", data.token); // Save JWT for future requests
+      
+      // Debug logs
+      console.log("User data to store:", data.user);
       localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
+      console.log("Stored user data:", localStorage.getItem("user"));
 
       // 👉 Redirect to main search page
       window.location.href = "/mainsearch";
