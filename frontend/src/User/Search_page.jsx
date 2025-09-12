@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/search.png";
 import image from "../assets/image.png";
 import { ProfilePage } from "../components/Profile_page/Profile_page.jsx";
@@ -8,6 +8,7 @@ import { ProfilePage } from "../components/Profile_page/Profile_page.jsx";
 
 export const SearchResultPage = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [properties, setProperties] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -194,7 +195,7 @@ export const SearchResultPage = () => {
                                                     <p className="text-sm text-black">{property.userId?.name || 'Unknown'}</p>
                                                 </div>
                                                 <button 
-                                                    onClick={() => window.location.href = `/property?id=${property._id}`}
+                                                    onClick={() => navigate(`/property?id=${property._id}`)}
                                                     className="px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
                                                 >
                                                     View Details
