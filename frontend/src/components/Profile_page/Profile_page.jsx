@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LeftIcon from "../../assets/LeftIcon.png";
 import avatar from "../../assets/avatar.png";
 import rentmeLogo2 from "../../assets/RentMe-Logo-2.png";
 
 export const ProfilePage = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get user info from localStorage
+    try {
+      const storedUser = localStorage.getItem("user");
+      const storedToken = localStorage.getItem("token");
+      
+      if (storedUser && storedUser !== "undefined") {
+        setUser(JSON.parse(storedUser));
+      } else if (!storedToken) {
+        // If no token and no user, redirect to login
+        window.location.href = "/login";
+        return;
+      }
+    } catch (error) {
+      console.error("Error parsing user data from localStorage:", error);
+      // Clear invalid data
+      localStorage.removeItem("user");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  };
   return (
     // <div className="bg-[#f5f7fa] grid justify-items-center items-start w-screen">
     //   <div className="bg-[#f5f7fa] overflow-hidden w-[1512px] h-[982px]">
@@ -22,10 +52,10 @@ export const ProfilePage = () => {
             <div className="flex h-12 items-center gap-2 top-[166px] left-0 absolute w-[251px]">
               <div className="flex flex-col items-start gap-1 relative flex-1">
                 <div className="font-semibold text-neutral-800 text-base">
-                  Jenny Wilson
+                  {loading ? "Loading..." : (user ? user.name : "Guest User")}
                 </div>
                 <div className="font-semibold text-neutral-400 text-base">
-                  jen.wilson@example.com
+                  {loading ? "Loading..." : (user ? user.email : "Please log in")}
                 </div>
               </div>
             </div>
@@ -37,11 +67,11 @@ export const ProfilePage = () => {
             />
           </div>
 
-          <div className="flex w-[214px] items-center justify-center gap-1 px-2 py-1.5 absolute top-[894px] left-[30px] bg-neutral-50 rounded">
-            <img src={LeftIcon} alt="Logout icon" className="!relative !w-5 !h-5" />
+          <div className="flex w-[214px] items-center justify-center gap-1 px-2 py-1.5 absolute top-[894px] left-[30px] bg-neutral-50 rounded cursor-pointer" onClick={user ? handleLogout : () => window.location.href = "/login"}>
+            <img src={LeftIcon} alt={user ? "Logout icon" : "Login icon"} className="!relative !w-5 !h-5" />
             <div className="inline-flex items-center justify-center px-1">
               <div className="font-semibold text-neutral-800 text-base">
-                Log out
+                {user ? "Log out" : "Log in"}
               </div>
             </div>
           </div>

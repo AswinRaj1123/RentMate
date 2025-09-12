@@ -31,6 +31,7 @@ export const LoginPage = () => {
 
       setSuccess("Login successful ✅");
       localStorage.setItem("token", data.token); // Save JWT for future requests
+      localStorage.setItem("user", JSON.stringify(data.user)); // Save user info
 
       // 👉 Redirect to main search page
       window.location.href = "/mainsearch";
