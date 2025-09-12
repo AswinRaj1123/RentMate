@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import arrowBack from "../assets/arrow_back.svg";
 import rentmeLogo1 from "../assets/rentme-logo-transparent-1.png";
+import loginBackgroundDesign2 from "../assets/login-background-design-2.png"; // background image
 
 export const PropertyPage = () => {
     // Form state
@@ -86,11 +87,30 @@ export const PropertyPage = () => {
                     alt="Back"
                     className="absolute w-[30px] h-[30px] top-[69px] left-[26px] cursor-pointer"
                 />
+  return (
+    <div className="bg-[#f5f7fa] min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden">
+      
+      {/* Header */}
+      <div className="w-full flex justify-between items-center px-6 py-4">
+        {/* Back button */}
+        <img
+          src={arrowBack}
+          alt="Back"
+          className="w-8 h-8 cursor-pointer"
+        />
 
-                {/* Title */}
-                <h2 className="absolute top-[130px] left-[30px] text-xl font-semibold text-gray-800">
-                    Add New Property
-                </h2>
+        {/* Logo */}
+        <img
+          className="w-12 h-12 object-cover"
+          alt="Rentme logo"
+          src={rentmeLogo1}
+        />
+      </div>
+
+      {/* Title */}
+      <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-4">
+        Add New Property
+      </h2>
 
                 {/* Form container */}
                 <form
