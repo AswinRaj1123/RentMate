@@ -32,8 +32,8 @@ export const LoginPage = () => {
       setSuccess("Login successful ✅");
       localStorage.setItem("token", data.token); // Save JWT for future requests
 
-      // 👉 Redirect to dashboard/homepage (adjust path as needed)
-      window.location.href = "/dashboard";
+      // 👉 Redirect to main search page
+      window.location.href = "/mainsearch";
 
     } catch (err) {
       setError(err.message);
@@ -135,7 +135,7 @@ export const LoginPage = () => {
           <p className="text-center text-sm text-gray-600">
             Don't have an account?{" "}
             <a
-              href="/register"
+              href="/signup"
               className="text-[#2e86de] font-semibold hover:text-[#1b4f9b] transition-colors duration-200"
             >
               Sign up

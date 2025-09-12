@@ -43,7 +43,7 @@ export const MainPage = () => {
         </button>
 
         <button
-          onClick={() => navigate("/app")}
+          onClick={() => navigate("/signup")}
           className="w-52 h-[54px] absolute top-[685px] left-[81px] flex items-center justify-center bg-[#2c2c2c] text-neutral-100 text-base font-bold rounded-lg border border-solid border-[#2c2c2c]"
         >
           SIGN UP
