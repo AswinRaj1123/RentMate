@@ -161,8 +161,16 @@ const propertySchema = new mongoose.Schema({
   location: { type: String, required: true },
   rent: { type: Number, required: true },
   description: { type: String },
-  amenities: { type: [String] }, // Array of amenities
-  photos: { type: [String] }, // Array of photo URLs
+  amenities: { type: [String] },
+  photos: { type: [String] },
+  // ✅ Add this field
+  roomSharing: [
+    {
+      ambience: { type: String, required: true },
+      sharingOption: { type: String, required: true },
+      createdAt: { type: Date, default: Date.now },
+    },
+  ],
 }, { timestamps: true });
 
 const Property = mongoose.model("Property", propertySchema, "property");
@@ -757,4 +765,30 @@ app.patch("/api/applications/:applicationId/status", async (req, res) => {
     console.error("❌ Update Application Status Error:", err);
     res.status(500).json({ error: "Failed to update application status" });
   }
+});
+
+// members sharing option
+// ----------------------------------------------------------------------------------------------
+// Room Sharing Schema & Model (embedded in Property for simplicity)
+
+app.post("/api/property/:propertyId/room-sharing", async (req, res) => {
+  const { propertyId } = req.params;
+  const { ambience, sharingOption } = req.body;
+
+  if (!ambience || !sharingOption) {
+    return res.status(400).json({ error: "Ambience and sharing option are required" });
+  }
+
+  // Example schema-less storage inside Property for now
+  const property = await Property.findByIdAndUpdate(
+    propertyId,
+    { $push: { roomSharing: { ambience, sharingOption, createdAt: new Date() } } },
+    { new: true, upsert: false }
+  );
+
+  if (!property) {
+    return res.status(404).json({ error: "Property not found" });
+  }
+
+  res.status(201).json({ message: "Room sharing created successfully", property });
 });

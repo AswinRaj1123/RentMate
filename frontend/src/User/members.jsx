@@ -9,6 +9,10 @@ export const MemberDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedSharing, setSelectedSharing] = useState("");
+  const [ambienceText, setAmbienceText] = useState("");
+
   // ✅ Get propertyId from URL query
   const urlParams = new URLSearchParams(location.search);
   const propertyId = urlParams.get("id");
@@ -43,7 +47,7 @@ export const MemberDetails = () => {
         gender: app.applicantId?.gender || "N/A",
         occupation: app.applicantId?.occupation || "N/A",
         sharing: `₹${app.propertyId?.rent || 0}`,
-        type: app.status, // "Pending", "Accepted", "Rejected"
+        type: app.status,
       }));
 
       setMembers(formattedMembers);
@@ -78,6 +82,44 @@ export const MemberDetails = () => {
     } catch (err) {
       console.error("Error updating status:", err);
       alert("Failed to update status");
+    }
+  };
+
+  // ✅ Handle Submit from Modal
+  const handleSubmitSharing = async () => {
+    if (!selectedSharing) {
+      alert("Please select a room sharing option.");
+      return;
+    }
+    if (!ambienceText.trim()) {
+      alert("Please describe your ideal living ambience.");
+      return;
+    }
+
+    try {
+      // Example API call (adjust URL & payload to match your backend)
+      const res = await fetch(
+        `http://localhost:3000/api/property/${propertyId}/room-sharing`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ambience: ambienceText,
+            sharingOption: selectedSharing,
+          }),
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to create room sharing");
+
+      alert("Room sharing created successfully!");
+      setShowModal(false);
+      setAmbienceText("");
+      setSelectedSharing("");
+    } catch (err) {
+      console.error("Error creating room sharing:", err);
+      alert("Failed to create room sharing. Try again.");
     }
   };
 
@@ -155,6 +197,75 @@ export const MemberDetails = () => {
         !loading && !error && (
           <p className="text-gray-600 mb-12">No members have applied yet.</p>
         )
+      )}
+
+      {/* ✅ Create Room Sharing Button */}
+      <button
+        onClick={() => setShowModal(true)}
+        className="mb-16 px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition"
+      >
+        Create Room Sharing
+      </button>
+
+      {/* ✅ Popup Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md relative">
+            {/* Back button */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-3 left-3 text-gray-700 text-xl"
+            >
+              ←
+            </button>
+
+            {/* Title */}
+            <h2 className="text-lg font-semibold text-center mb-2">
+              Describe Your Ideal Living Ambience
+            </h2>
+
+            {/* ✅ Textbox for ambience */}
+            <textarea
+              value={ambienceText}
+              onChange={(e) => setAmbienceText(e.target.value)}
+              placeholder="Type here... (e.g., Quiet neighbourhood, pet-friendly, co-living...)"
+              className="w-full border rounded-md p-3 text-sm text-gray-700 focus:ring-2 focus:ring-blue-500 mb-6"
+              rows={3}
+            />
+
+            {/* Options */}
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
+              <button
+                onClick={() => setSelectedSharing("Room Sharing for ₹5000 (4 people)")}
+                className={`px-4 py-2 rounded-full text-sm ${
+                  selectedSharing === "Room Sharing for ₹5000 (4 people)"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+              >
+                Room Sharing for ₹5000 (4 people)
+              </button>
+              <button
+                onClick={() => setSelectedSharing("Room Sharing for ₹10000 (2 people)")}
+                className={`px-4 py-2 rounded-full text-sm ${
+                  selectedSharing === "Room Sharing for ₹10000 (2 people)"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+              >
+                Room Sharing for ₹10000 (2 people)
+              </button>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              onClick={handleSubmitSharing}
+              className="w-full bg-green-600 text-white font-medium py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              SUBMIT
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Decorative background */}
