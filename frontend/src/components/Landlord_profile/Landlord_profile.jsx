@@ -9,8 +9,6 @@ export const LandlordProfile = () => {
       {/* Logo Section */}
       <div className="flex flex-col items-center mb-10">
         <img src={rentmeLogo} alt="RentMate Logo" className="w-16 h-16 mb-2" />
-        <h1 className="text-lg font-bold text-[#1a1a1a]">RentMate</h1>
-        <p className="text-xs text-gray-500">Smart Rent, More Easy</p>
       </div>
 
       {/* Menu */}
