@@ -1,0 +1,19 @@
+{
+  "name": "rentmate-backend",
+  "version": "1.0.0",
+  "main": "node_server.js",
+  "scripts": {
+    "start": "node node_server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0", 
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.19.0",
+    "mongoose": "^8.18.0",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2"
+  }
+}
