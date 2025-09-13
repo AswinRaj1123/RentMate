@@ -954,3 +954,29 @@ app.get("/api/applications/:applicationId", async (req, res) => {
     res.status(500).json({ error: "Failed to get application details" });
   }
 });
+
+// ----------------------------------------------------------------------
+// API: Get All Properties by Landlord
+app.get("/api/landlord/:landlordId/properties", async (req, res) => {
+  try {
+    const { landlordId } = req.params;
+
+    // Validate landlordId
+    if (!mongoose.Types.ObjectId.isValid(landlordId)) {
+      return res.status(400).json({ error: "Invalid landlord ID" });
+    }
+
+    // Find properties
+    const properties = await Property.find({ userId: landlordId })
+      .select("title location rent description photos");
+
+    if (!properties || properties.length === 0) {
+      return res.status(200).json({ properties: [] });
+    }
+
+    res.status(200).json({ properties });
+  } catch (err) {
+    console.error("❌ Get Landlord Properties Error:", err);
+    res.status(500).json({ error: "Failed to get properties" });
+  }
+});
