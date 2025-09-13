@@ -1,4 +1,4 @@
-import { LoginPage } from './components/login_page/login_page'  
+import { MainPage } from "./components/main_page/main_page.jsx";
 import './App.css'
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <LoginPage/>
+      <MainPage/>
       
     </>
   )
