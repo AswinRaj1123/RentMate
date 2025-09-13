@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import arrowBack from "../assets/arrow_back.svg";
 import rentmeLogo1 from "../assets/rentme-logo-transparent-1.png";
+import { LandlordProfile } from "../components/Landlord_profile/Landlord_profile.jsx";
 
 export const PropertyPage = () => {
   const [title, setTitle] = useState("");
@@ -86,138 +87,143 @@ export const PropertyPage = () => {
   };
 
   return (
-    <div className="bg-[#f5f7fa] min-h-screen flex justify-center items-start sm:items-center py-6">
-      <div className="bg-[#f5f7fa] w-full max-w-[393px] sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative rounded-lg shadow-lg">
-        {/* Logo */}
-        <img
-          className="absolute w-[50px] sm:w-[60px] top-6 right-6 sm:right-10 aspect-[1] object-cover"
-          alt="Rentme logo"
-          src={rentmeLogo1}
-        />
+    <div className="bg-[#f5f7fa] min-h-screen flex">
+      {/* Sidebar */}
+      <LandlordProfile />
+      {/* Main Content */}
+      <main className="flex-1 ml-64 flex justify-center items-start sm:items-center py-6">
+        <div className="bg-[#f5f7fa] w-full max-w-[393px] sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative rounded-lg shadow-lg">
+          {/* Logo */}
+          <img
+            className="absolute w-[50px] sm:w-[60px] top-6 right-6 sm:right-10 aspect-[1] object-cover"
+            alt="Rentme logo"
+            src={rentmeLogo1}
+          />
 
-        {/* Back button */}
-        <img
-          src={arrowBack}
-          alt="Back"
-          className="absolute w-[25px] sm:w-[30px] top-6 left-6 cursor-pointer"
-        />
+          {/* Back button */}
+          <img
+            src={arrowBack}
+            alt="Back"
+            className="absolute w-[25px] sm:w-[30px] top-6 left-6 cursor-pointer"
+          />
 
-        {/* Form */}
-        <form
-          className="mt-24 sm:mt-28 bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[75vh]"
-          onSubmit={handleSubmit}
-        >
-          {/* Title */}
-          <div>
-            <label className="block font-medium text-gray-800">Title</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter property title"
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-              required
-            />
-          </div>
+          {/* Form */}
+          <form
+            className="mt-24 sm:mt-28 bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[75vh]"
+            onSubmit={handleSubmit}
+          >
+            {/* Title */}
+            <div>
+              <label className="block font-medium text-gray-800">Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter property title"
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                required
+              />
+            </div>
 
-          {/* Location */}
-          <div>
-            <label className="block font-medium text-gray-800">Location</label>
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter property location"
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-              required
-            />
-          </div>
+            {/* Location */}
+            <div>
+              <label className="block font-medium text-gray-800">Location</label>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter property location"
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                required
+              />
+            </div>
 
-          {/* Rent */}
-          <div>
-            <label className="block font-medium text-gray-800">Rent</label>
-            <input
-              type="number"
-              value={rent}
-              onChange={(e) => setRent(e.target.value)}
-              placeholder="Enter rent amount"
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-              required
-            />
-          </div>
+            {/* Rent */}
+            <div>
+              <label className="block font-medium text-gray-800">Rent</label>
+              <input
+                type="number"
+                value={rent}
+                onChange={(e) => setRent(e.target.value)}
+                placeholder="Enter rent amount"
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                required
+              />
+            </div>
 
-          {/* Description */}
-          <div>
-            <label className="block font-medium text-gray-800">Description</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Enter description"
-              rows="3"
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-            />
-          </div>
+            {/* Description */}
+            <div>
+              <label className="block font-medium text-gray-800">Description</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter description"
+                rows="3"
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+              />
+            </div>
 
-          {/* Amenities */}
-          <div>
-            <label className="block font-medium text-gray-800">Amenities</label>
-            <input
-              type="text"
-              value={amenities}
-              onChange={(e) => setAmenities(e.target.value)}
-              placeholder="Enter amenities (comma separated)"
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-            />
-          </div>
+            {/* Amenities */}
+            <div>
+              <label className="block font-medium text-gray-800">Amenities</label>
+              <input
+                type="text"
+                value={amenities}
+                onChange={(e) => setAmenities(e.target.value)}
+                placeholder="Enter amenities (comma separated)"
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+              />
+            </div>
 
-          {/* Number of Tenants */}
-          <div>
-            <label className="block font-medium text-gray-800">
-              Number of Tenants
-            </label>
-            <select
-              value={numberOfTenants}
-              onChange={(e) => setNumberOfTenants(e.target.value)}
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-              required
-            >
-              <option value="" disabled>
-                Select max number of tenants
-              </option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4+</option>
-            </select>
-          </div>
+            {/* Number of Tenants */}
+            <div>
+              <label className="block font-medium text-gray-800">
+                Number of Tenants
+              </label>
+              <select
+                value={numberOfTenants}
+                onChange={(e) => setNumberOfTenants(e.target.value)}
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                required
+              >
+                <option value="" disabled>
+                  Select max number of tenants
+                </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4+</option>
+              </select>
+            </div>
 
-          {/* Photos */}
-          <div>
-            <label className="block font-medium text-gray-800">Photos</label>
-            <input
-              type="file"
-              multiple
-              onChange={handlePhotoChange}
-              className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
-            />
-          </div>
+            {/* Photos */}
+            <div>
+              <label className="block font-medium text-gray-800">Photos</label>
+              <input
+                type="file"
+                multiple
+                onChange={handlePhotoChange}
+                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+              />
+            </div>
 
-          {/* Submit */}
-          <div>
-            <button
-              type="submit"
-              className="w-full h-10 flex items-center justify-center gap-2 bg-[#2e86de] rounded-lg border border-solid border-[#1b4f9b] text-white font-medium"
-              disabled={loading}
-            >
-              {loading ? "Submitting..." : "Submit"}
-            </button>
-          </div>
+            {/* Submit */}
+            <div>
+              <button
+                type="submit"
+                className="w-full h-10 flex items-center justify-center gap-2 bg-[#2e86de] rounded-lg border border-solid border-[#1b4f9b] text-white font-medium"
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Submit"}
+              </button>
+            </div>
 
-          {message && (
-            <div className="text-center text-sm text-red-500 mt-2">{message}</div>
-          )}
-        </form>
-      </div>
+            {message && (
+              <div className="text-center text-sm text-red-500 mt-2">{message}</div>
+            )}
+          </form>
+        </div>
+      </main>
     </div>
   );
 };
