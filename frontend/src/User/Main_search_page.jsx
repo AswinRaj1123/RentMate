@@ -158,8 +158,8 @@ export const MainSearchPage = () => {
                         </div>
 
                         <img 
-                            className="absolute w-[30px] h-[30px] top-6 left-[680px] cursor-pointer" 
-                            alt="Arrow Back"
+                            className="absolute w-[30px] h-[30px] top-6 left-[680px] cursor-pointer transform scale-x-[-1]" 
+                            alt="Arrow Forward"
                             src={arrowBack}
                             onClick={handleSearch}
                         />
@@ -235,63 +235,105 @@ export const MainSearchPage = () => {
                             </div>
 
                             <div className="absolute w-[33px] h-[27px] top-[84px] left-[21px]">
-                                <img
-                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer"
-                                    alt="Rectangle"
-                                    src={isRangeSelected("1000-5000") ? rectangle11 : rectangle11}
+                                <div
+                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer border-2 rounded-md flex items-center justify-center"
                                     onClick={() => handlePriceRangeToggle("1000-5000")}
-                                    style={{ opacity: isRangeSelected("1000-5000") ? 1 : 0.3 }}
-                                />
+                                    style={{ 
+                                        backgroundColor: isRangeSelected("1000-5000") ? "#2e3a59" : "white",
+                                        borderColor: isRangeSelected("1000-5000") ? "#2e3a59" : "#ccc"
+                                    }}
+                                >
+                                    {isRangeSelected("1000-5000") && (
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="absolute w-[33px] h-[27px] top-[43px] left-[21px]">
-                                <img
-                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer"
-                                    alt="Rectangle"
-                                    src={rectangle11}
+                                <div
+                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer border-2 rounded-md flex items-center justify-center"
                                     onClick={() => handlePriceRangeToggle("")}
-                                    style={{ opacity: isRangeSelected("") ? 1 : 0.3 }}
-                                />
+                                    style={{ 
+                                        backgroundColor: isRangeSelected("") ? "#2e3a59" : "white",
+                                        borderColor: isRangeSelected("") ? "#2e3a59" : "#ccc"
+                                    }}
+                                >
+                                    {isRangeSelected("") && (
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="absolute w-[33px] h-[27px] top-[125px] left-5">
-                                <img
-                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer"
-                                    alt="Rectangle"
-                                    src={rectangle112}
+                                <div
+                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer border-2 rounded-md flex items-center justify-center"
                                     onClick={() => handlePriceRangeToggle("5000-15000")}
-                                    style={{ opacity: isRangeSelected("5000-15000") ? 1 : 0.3 }}
-                                />
+                                    style={{ 
+                                        backgroundColor: isRangeSelected("5000-15000") ? "#2e3a59" : "white",
+                                        borderColor: isRangeSelected("5000-15000") ? "#2e3a59" : "#ccc"
+                                    }}
+                                >
+                                    {isRangeSelected("5000-15000") && (
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="absolute w-[33px] h-[27px] top-[166px] left-5">
-                                <img
-                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer"
-                                    alt="Rectangle"
-                                    src={rectangle113}
+                                <div
+                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer border-2 rounded-md flex items-center justify-center"
                                     onClick={() => handlePriceRangeToggle("15000-30000")}
-                                    style={{ opacity: isRangeSelected("15000-30000") ? 1 : 0.3 }}
-                                />
+                                    style={{ 
+                                        backgroundColor: isRangeSelected("15000-30000") ? "#2e3a59" : "white",
+                                        borderColor: isRangeSelected("15000-30000") ? "#2e3a59" : "#ccc"
+                                    }}
+                                >
+                                    {isRangeSelected("15000-30000") && (
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="absolute w-[33px] h-[27px] top-52 left-5">
-                                <img
-                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer"
-                                    alt="Rectangle"
-                                    src={rectangle114}
+                                <div
+                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer border-2 rounded-md flex items-center justify-center"
                                     onClick={() => handlePriceRangeToggle("30000-60000")}
-                                    style={{ opacity: isRangeSelected("30000-60000") ? 1 : 0.3 }}
-                                />
+                                    style={{ 
+                                        backgroundColor: isRangeSelected("30000-60000") ? "#2e3a59" : "white",
+                                        borderColor: isRangeSelected("30000-60000") ? "#2e3a59" : "#ccc"
+                                    }}
+                                >
+                                    {isRangeSelected("30000-60000") && (
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="absolute w-[33px] h-[27px] top-[249px] left-5">
-                                <img
-                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer"
-                                    alt="Rectangle"
-                                    src={rectangle115}
+                                <div
+                                    className="absolute w-[41px] h-[35px] top-0 -left-1 cursor-pointer border-2 rounded-md flex items-center justify-center"
                                     onClick={() => handlePriceRangeToggle("60000-max")}
-                                    style={{ opacity: isRangeSelected("60000-max") ? 1 : 0.3 }}
-                                />
+                                    style={{ 
+                                        backgroundColor: isRangeSelected("60000-max") ? "#2e3a59" : "white",
+                                        borderColor: isRangeSelected("60000-max") ? "#2e3a59" : "#ccc"
+                                    }}
+                                >
+                                    {isRangeSelected("60000-max") && (
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="absolute w-[444px] top-0 left-0 font-body-base font-[number:var(--body-base-font-weight)] text-[#1e1e1e] text-[length:var(--body-base-font-size)] tracking-[var(--body-base-letter-spacing)] leading-[var(--body-base-line-height)] [font-style:var(--body-base-font-style)]">
