@@ -41,7 +41,7 @@ export const SearchResultPage = () => {
             params.append('page', '1');
             params.append('limit', '10');
 
-            const response = await fetch(`http://localhost:3000/api/search-properties?${params.toString()}`);
+            const response = await fetch(`https://rentmate-backend-4cdc.onrender.com/api/search-properties?${params.toString()}`);
             const data = await response.json();
 
             if (response.ok) {

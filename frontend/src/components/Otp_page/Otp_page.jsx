@@ -65,7 +65,7 @@ export const OtpPage = () => {
 
     try {
       // Step 1: Verify OTP
-      const otpResponse = await fetch("http://localhost:3000/api/verify-otp", {
+      const otpResponse = await fetch("https://rentmate-backend-4cdc.onrender.com/api/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: code }),
@@ -78,7 +78,7 @@ export const OtpPage = () => {
       }
 
       // Step 2: Create user account after successful OTP verification
-      const userResponse = await fetch("http://localhost:3000/api/users", {
+      const userResponse = await fetch("https://rentmate-backend-4cdc.onrender.com/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -114,7 +114,7 @@ export const OtpPage = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/resend-otp", {
+      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/resend-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

@@ -33,7 +33,7 @@ export const MemberDetails = () => {
       setError("");
 
       const res = await fetch(
-        `http://localhost:3000/api/property/${propertyId}/applications`
+        `https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}/applications`
       );
       const data = await res.json();
 
@@ -63,7 +63,7 @@ export const MemberDetails = () => {
   const updateStatus = async (applicationId, status) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/applications/${applicationId}/status`,
+        `https://rentmate-backend-4cdc.onrender.com/api/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -99,7 +99,7 @@ export const MemberDetails = () => {
     try {
       // Example API call (adjust URL & payload to match your backend)
       const res = await fetch(
-        `http://localhost:3000/api/property/${propertyId}/room-sharing`,
+        `https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}/room-sharing`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

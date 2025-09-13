@@ -64,8 +64,8 @@ export const PropertyPage = () => {
     console.log("📤 Payload being sent:", payload);
 
     try {
-      // ✅ Using correct port (3000) to match your backend
-      const res = await fetch("http://localhost:3000/api/property", {
+      // ✅ Using the new Render backend URL
+      const res = await fetch("https://rentmate-backend-4cdc.onrender.com/api/property", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

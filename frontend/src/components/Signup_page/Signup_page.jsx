@@ -78,7 +78,7 @@ export const SignUpPage = () => {
       setLoading(true);
       
       // Step 1: Request OTP
-      const response = await fetch("http://localhost:3000/api/request-otp", {
+      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/request-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

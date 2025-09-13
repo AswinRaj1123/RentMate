@@ -40,7 +40,7 @@ export const ForgetAuth = () => {
 
         try {
             // Call the verify OTP API
-            const response = await fetch("http://localhost:3000/api/verify-reset-otp", {
+            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/verify-reset-otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const ForgetAuth = () => {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:3000/api/resend-reset-otp", {
+            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/resend-reset-otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

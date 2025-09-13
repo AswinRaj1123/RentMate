@@ -35,7 +35,7 @@ export const PropertyDetails = () => {
       setError("");
 
       const response = await fetch(
-        `http://localhost:3000/api/property/details/${propertyId}`
+        `https://rentmate-backend-4cdc.onrender.com/api/property/details/${propertyId}`
       );
       const data = await response.json();
 
@@ -79,7 +79,7 @@ export const PropertyDetails = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/api/property/${property._id}/apply`,
+        `https://rentmate-backend-4cdc.onrender.com/api/property/${property._id}/apply`,
         {
           method: "POST",
           headers: {

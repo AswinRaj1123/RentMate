@@ -27,7 +27,7 @@ export const ForgetPassword = () => {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:3000/api/forgot-password", {
+            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/forgot-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

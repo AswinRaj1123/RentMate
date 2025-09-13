@@ -21,9 +21,9 @@ export const ViewApplication = () => {
       }
 
       try {
-        // ✅ Use correct port (3000) to match your backend
+        // ✅ Use the new Render backend URL
         const res = await fetch(
-          `http://localhost:3000/api/landlord/${landlordId}/applications`
+          `https://rentmate-backend-4cdc.onrender.com/api/landlord/${landlordId}/applications`
         );
         const data = await res.json();
         if (res.ok) {
@@ -44,9 +44,9 @@ export const ViewApplication = () => {
   // Update Application Status Handler
   const handleStatusUpdate = async (applicationId, status) => {
     try {
-      // ✅ Use correct port (3000) to match your backend
+      // ✅ Use the new Render backend URL
       const res = await fetch(
-        `http://localhost:3000/api/applications/${applicationId}/status`,
+        `https://rentmate-backend-4cdc.onrender.com/api/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

@@ -25,8 +25,8 @@ export const MyProperties = () => {
       console.log("🔍 Fetching properties for landlord:", landlordId);
 
       try {
-        // ✅ Use the new /api/properties endpoint
-        const response = await fetch(`http://localhost:3000/api/properties`);
+        // ✅ Use the new Render backend URL
+        const response = await fetch(`https://rentmate-backend-4cdc.onrender.com/api/properties`);
         
         console.log("📡 Response status:", response.status);
         
@@ -82,7 +82,7 @@ export const MyProperties = () => {
       console.log("🗑️ Deleting property:", propertyId);
       
       const response = await fetch(
-        `http://localhost:3000/api/property/${propertyId}`,
+        `https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}`,
         {
           method: "DELETE",
           headers: {

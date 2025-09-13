@@ -11,7 +11,7 @@ export const AdminPage = () => {
         const fetchProperties = async () => {
             setLoading(true);
             try {
-                const res = await fetch("http://localhost:3000/api/search-properties");
+                const res = await fetch("https://rentmate-backend-4cdc.onrender.com/api/search-properties");
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.error || "Failed to fetch properties");
                 setProperties(data.properties);
@@ -27,7 +27,7 @@ export const AdminPage = () => {
     const handleDelete = async (propertyId) => {
         if (!window.confirm("Are you sure you want to delete this property?")) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/property/${propertyId}`, {
+            const res = await fetch(`https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}`, {
                 method: "DELETE",
             });
             const data = await res.json();
