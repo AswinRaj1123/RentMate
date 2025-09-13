@@ -6,14 +6,24 @@ import { LandlordProfile } from "../components/Landlord_profile/Landlord_profile
 export const ViewApplication = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const landlordId = "YOUR_LANDLORD_ID"; // 👉 Replace with logged-in landlord's ID from auth
+  
+  // ✅ Get landlord ID from localStorage instead of hardcoded value
+  const landlordId = localStorage.getItem("userId");
 
   // Fetch all applications for landlord
   useEffect(() => {
     const fetchApplications = async () => {
+      // ✅ Check if landlordId exists
+      if (!landlordId) {
+        console.error("No landlord ID found in localStorage");
+        setLoading(false);
+        return;
+      }
+
       try {
+        // ✅ Use correct port (3000) to match your backend
         const res = await fetch(
-          `http://localhost:8000/api/landlord/${landlordId}/applications`
+          `http://localhost:3000/api/landlord/${landlordId}/applications`
         );
         const data = await res.json();
         if (res.ok) {
@@ -34,8 +44,9 @@ export const ViewApplication = () => {
   // Update Application Status Handler
   const handleStatusUpdate = async (applicationId, status) => {
     try {
+      // ✅ Use correct port (3000) to match your backend
       const res = await fetch(
-        `http://localhost:8000/api/applications/${applicationId}/status`,
+        `http://localhost:3000/api/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -56,6 +67,23 @@ export const ViewApplication = () => {
       console.error("❌ Update Application Error:", err);
     }
   };
+
+  // ✅ Show login prompt if no landlord ID
+  if (!landlordId) {
+    return (
+      <div className="min-h-screen bg-[#f5f7fa] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Please log in to view applications</p>
+          <button 
+            onClick={() => window.location.href = '/login'}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#f5f7fa] flex">

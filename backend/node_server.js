@@ -980,3 +980,24 @@ app.get("/api/landlord/:landlordId/properties", async (req, res) => {
     res.status(500).json({ error: "Failed to get properties" });
   }
 });
+
+// ✅ Add this endpoint to get all properties
+app.get("/api/properties", async (req, res) => {
+  try {
+    console.log("🔍 Fetching all properties");
+    
+    // Find all properties and populate userId with user details
+    const properties = await Property.find({}).populate('userId', 'name email role');
+    
+    console.log(`✅ Found ${properties.length} properties`);
+    
+    res.status(200).json(properties);
+    
+  } catch (error) {
+    console.error("❌ Error fetching properties:", error);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch properties"
+    });
+  }
+});

@@ -17,6 +17,23 @@ export const PropertyPage = () => {
 
   const userId = localStorage.getItem("userId"); // ✅ userId check
 
+  // ✅ Authentication check - redirect if not logged in
+  if (!userId) {
+    return (
+      <div className="min-h-screen bg-[#f5f7fa] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Please log in to add a property</p>
+          <button 
+            onClick={() => window.location.href = '/login'}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Go to Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const handlePhotoChange = (e) => {
     setPhotos([...e.target.files]);
   };
@@ -25,12 +42,6 @@ export const PropertyPage = () => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-
-    if (!userId) {
-      setMessage("⚠️ You must be logged in to add a property.");
-      setLoading(false);
-      return;
-    }
 
     const amenitiesArr = amenities
       .split(",")
@@ -53,6 +64,7 @@ export const PropertyPage = () => {
     console.log("📤 Payload being sent:", payload);
 
     try {
+      // ✅ Using correct port (3000) to match your backend
       const res = await fetch("http://localhost:3000/api/property", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -63,6 +75,7 @@ export const PropertyPage = () => {
 
       if (res.ok) {
         setMessage("✅ Property added successfully!");
+        // ✅ Clear form after successful submission
         setTitle("");
         setLocation("");
         setRent("");
@@ -70,12 +83,17 @@ export const PropertyPage = () => {
         setAmenities("");
         setNumberOfTenants("");
         setPhotos([]);
+        
+        // ✅ Auto-redirect to My Properties after 2 seconds
+        setTimeout(() => {
+          window.location.href = '/myproperties';
+        }, 2000);
       } else {
-        setMessage(data.error || "❌ Failed to add property");
+        setMessage(`❌ ${data.error || "Failed to add property"}`);
       }
     } catch (err) {
       console.error("❌ Error submitting property:", err);
-      setMessage("❌ Server error, please try again later");
+      setMessage("❌ Network error, please try again later");
     }
 
     setLoading(false);
@@ -102,6 +120,7 @@ export const PropertyPage = () => {
             src={arrowBack}
             alt="Back"
             className="absolute w-[25px] sm:w-[30px] top-6 left-20 sm:left-28 cursor-pointer block md:hidden"
+            onClick={() => window.location.href = '/myproperties'}
           />
 
           {/* Avatar (top-right) */}
@@ -116,114 +135,166 @@ export const PropertyPage = () => {
             className="mt-24 sm:mt-28 bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[75vh]"
             onSubmit={handleSubmit}
           >
+            {/* Header */}
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Add New Property</h2>
+              <p className="text-gray-600 mt-2">Fill in the details to list your property</p>
+            </div>
+
             {/* Title */}
             <div>
-              <label className="block font-medium text-gray-800">Title</label>
+              <label className="block font-medium text-gray-800 mb-1">
+                Property Title *
+              </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter property title"
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                placeholder="e.g., 2BHK Apartment in Koramangala"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none"
                 required
               />
             </div>
 
             {/* Location */}
             <div>
-              <label className="block font-medium text-gray-800">Location</label>
+              <label className="block font-medium text-gray-800 mb-1">
+                Location *
+              </label>
               <input
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="Enter property location"
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                placeholder="e.g., Koramangala, Bangalore"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none"
                 required
               />
             </div>
 
             {/* Rent */}
             <div>
-              <label className="block font-medium text-gray-800">Rent</label>
+              <label className="block font-medium text-gray-800 mb-1">
+                Monthly Rent (₹) *
+              </label>
               <input
                 type="number"
                 value={rent}
                 onChange={(e) => setRent(e.target.value)}
-                placeholder="Enter rent amount"
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                placeholder="e.g., 25000"
+                min="1"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none"
                 required
               />
             </div>
 
             {/* Description */}
             <div>
-              <label className="block font-medium text-gray-800">Description</label>
+              <label className="block font-medium text-gray-800 mb-1">
+                Description
+              </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Enter description"
-                rows="3"
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                placeholder="Describe your property features, nearby amenities, etc."
+                rows="4"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none resize-none"
               />
             </div>
 
             {/* Amenities */}
             <div>
-              <label className="block font-medium text-gray-800">Amenities</label>
+              <label className="block font-medium text-gray-800 mb-1">
+                Amenities
+              </label>
               <input
                 type="text"
                 value={amenities}
                 onChange={(e) => setAmenities(e.target.value)}
-                placeholder="Enter amenities (comma separated)"
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                placeholder="e.g., WiFi, AC, Parking, Security, Gym"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none"
               />
+              <p className="text-sm text-gray-500 mt-1">Separate multiple amenities with commas</p>
             </div>
 
             {/* Number of Tenants */}
             <div>
-              <label className="block font-medium text-gray-800">
-                Number of Tenants
+              <label className="block font-medium text-gray-800 mb-1">
+                Maximum Number of Tenants *
               </label>
               <select
                 value={numberOfTenants}
                 onChange={(e) => setNumberOfTenants(e.target.value)}
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none"
                 required
               >
                 <option value="" disabled>
-                  Select max number of tenants
+                  Select maximum tenants
                 </option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4+</option>
+                <option value="1">1 Tenant</option>
+                <option value="2">2 Tenants</option>
+                <option value="3">3 Tenants</option>
+                <option value="4">4+ Tenants</option>
               </select>
             </div>
 
             {/* Photos */}
             <div>
-              <label className="block font-medium text-gray-800">Photos</label>
+              <label className="block font-medium text-gray-800 mb-1">
+                Property Photos
+              </label>
               <input
                 type="file"
                 multiple
+                accept="image/*"
                 onChange={handlePhotoChange}
-                className="w-full mt-1 p-2 border rounded-lg border-[#d1d9e6] text-gray-600"
+                className="w-full p-3 border rounded-lg border-[#d1d9e6] text-gray-600 focus:border-blue-500 focus:outline-none"
               />
+              <p className="text-sm text-gray-500 mt-1">
+                Upload multiple photos to attract more tenants
+              </p>
+              {photos.length > 0 && (
+                <p className="text-sm text-green-600 mt-1">
+                  {photos.length} photo(s) selected
+                </p>
+              )}
             </div>
 
-            {/* Submit */}
-            <div>
+            {/* Submit Button */}
+            <div className="pt-4">
               <button
                 type="submit"
-                className="w-full h-10 flex items-center justify-center gap-2 bg-[#2e86de] rounded-lg border border-solid border-[#1b4f9b] text-white font-medium"
+                className={`w-full h-12 flex items-center justify-center gap-2 rounded-lg border font-medium text-white transition-colors ${
+                  loading 
+                    ? "bg-gray-400 cursor-not-allowed" 
+                    : "bg-[#2e86de] hover:bg-[#1b4f9b] border-[#1b4f9b]"
+                }`}
                 disabled={loading}
               >
-                {loading ? "Submitting..." : "Submit"}
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Adding Property...
+                  </>
+                ) : (
+                  "Add Property"
+                )}
               </button>
             </div>
 
+            {/* Success/Error Message */}
             {message && (
-              <div className="text-center text-sm text-red-500 mt-2">{message}</div>
+              <div className={`text-center text-sm mt-4 p-3 rounded-lg ${
+                message.includes("✅") 
+                  ? "bg-green-100 text-green-700 border border-green-300" 
+                  : "bg-red-100 text-red-700 border border-red-300"
+              }`}>
+                {message}
+                {message.includes("✅") && (
+                  <div className="mt-2 text-xs">
+                    Redirecting to My Properties...
+                  </div>
+                )}
+              </div>
             )}
           </form>
         </div>
