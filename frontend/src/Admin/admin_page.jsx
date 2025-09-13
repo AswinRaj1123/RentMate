@@ -65,6 +65,9 @@ export const AdminPage = () => {
                                 <div className="text-black text-base mb-1">Pricing: ₹{prop.rent}</div>
                                 <div className="text-black text-sm mb-1">
                                     <span className="font-semibold">Location:</span> {prop.location}
+                                    <div className="text-black text-sm mb-1">
+                                    <span className="font-semibold">Name:</span> {prop.description}
+                                </div>
                                 </div>
                                 <div className="text-black text-sm mb-1">
                                     <span className="font-semibold">Description:</span> {prop.description}
