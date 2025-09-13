@@ -25,7 +25,7 @@ mongoose.connect(uri)
   // CORS Middleware
   const cors = require("cors");
 app.use(cors({
-  origin: "http://localhost:5173", // your React dev server (Vite default)
+  origin: "https://rentmate-six.vercel.app/", // your React dev server (Vite default)
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
