@@ -1011,7 +1011,7 @@ const cosineSimilarity = require("cosine-similarity");
 // -------------------- Schema --------------------
 const userformSchema = new mongoose.Schema({
   name: String,
-  email: { type: String, required: true, unique: true },
+  // email: { type: String, required: true, unique: true },
   budget: Number,
   location: String,
   sleep_schedule: String,
@@ -1035,9 +1035,9 @@ function encodeUser(user) {
 // -------------------- API Endpoints --------------------
 
 // 1. Register User
-app.post("/api/users", async (req, res) => {
+app.post("/api/ai/users", async (req, res) => {
   try {
-    const user = new User(req.body);
+    const user = new Userform(req.body); // ✅ Use Userform model
     await user.save();
     res.status(201).json({ message: "✅ User created", userId: user._id });
   } catch (err) {
