@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; // ✅ added useNavigate
 import image1 from "../assets/image1.png";
 import image2 from "../assets/image2.png";
@@ -16,6 +16,46 @@ export const PropertyDetails = () => {
   const [isSubmittingApplication, setIsSubmittingApplication] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
   const [applicationMessage, setApplicationMessage] = useState("");
+
+  // Get userId from localStorage (or context/auth)
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchUserProperties = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        // 1. Get all property IDs for this user
+        const res = await fetch(`http://localhost:3000/api/property/${userId}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to fetch properties");
+
+        // 2. For each property, fetch full details
+        const detailsPromises = data.properties.map(async (prop) => {
+          const detailsRes = await fetch(
+            `http://localhost:3000/api/property/details/${prop._id}`
+          );
+          const detailsData = await detailsRes.json();
+          if (!detailsRes.ok)
+            throw new Error(detailsData.error || "Failed to fetch property details");
+          return detailsData.property;
+        });
+
+        const detailedProperties = await Promise.all(detailsPromises);
+        setProperties(detailedProperties);
+      } catch (err) {
+        setError(err.message);
+      }
+      setLoading(false);
+    };
+
+    if (userId) {
+      fetchUserProperties();
+    } else {
+      setError("User not logged in");
+      setLoading(false);
+    }
+  }, [userId]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
