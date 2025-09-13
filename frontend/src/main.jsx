@@ -26,7 +26,7 @@ import { MemberDetails } from "./User/members.jsx";
 import { PropertyPage } from "./Landlord/Add_Property_page.jsx";
 import { MyProperties } from "./Landlord/My_property.jsx";
 import { ViewApplication } from "./Landlord/View_application.jsx";
-// import { LanlordProfile } from "./components/Landlord_profile/Landlord_profile.jsx";
+import { LandlordProfile } from "./components/Landlord_profile/Landlord_profile.jsx";
 
 // 🔹 Admin
 import { AdminPage } from "./Admin/admin_page.jsx";
@@ -58,7 +58,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/addproperty" element={<PropertyPage />} />
         <Route path="/myproperties" element={<MyProperties />} />
         <Route path="/viewapplication" element={<ViewApplication />} />
-        {/* <Route path="/landlordprofile" element={<LanlordProfile />} /> */}
+        <Route path="/landlordprofile" element={<LandlordProfile />} />
 
         {/* ----------------- Admin ----------------- */}
         <Route path="/admin" element={<AdminPage />} />
