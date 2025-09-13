@@ -810,3 +810,147 @@ app.delete("/api/property/:propertyId", async (req, res) => {
     res.status(500).json({ error: "Failed to delete property" });
   }
 });
+
+// ----------------------------------------------------------------------
+// API: Get All Applications for Landlord's Properties
+app.get("/api/landlord/:landlordId/applications", async (req, res) => {
+  try {
+    const { landlordId } = req.params;
+    const { status, page = 1, limit = 10 } = req.query;
+
+    // Validate landlordId
+    if (!mongoose.Types.ObjectId.isValid(landlordId)) {
+      return res.status(400).json({ error: "Invalid landlord ID" });
+    }
+
+    // First, find all properties owned by this landlord
+    const landlordProperties = await Property.find({ userId: landlordId });
+    
+    if (landlordProperties.length === 0) {
+      return res.status(200).json({ 
+        applications: [], 
+        totalApplications: 0,
+        message: "No properties found for this landlord" 
+      });
+    }
+
+    // Get all property IDs
+    const propertyIds = landlordProperties.map(property => property._id);
+
+    // Build query for applications
+    let applicationQuery = { propertyId: { $in: propertyIds } };
+    
+    // Filter by status if provided
+    if (status && ["Pending", "Accepted", "Rejected"].includes(status)) {
+      applicationQuery.status = status;
+    }
+
+    // Pagination
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    // Get applications with populated data
+    const applications = await Application.find(applicationQuery)
+      .populate('applicantId', 'name email phone gender occupation')
+      .populate('propertyId', 'title location rent numberOfTenants')
+      .sort({ appliedAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    // Get total count for pagination
+    const totalApplications = await Application.countDocuments(applicationQuery);
+
+    res.status(200).json({
+      applications,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(totalApplications / parseInt(limit)),
+        totalApplications,
+        hasNextPage: skip + applications.length < totalApplications,
+        hasPrevPage: parseInt(page) > 1
+      }
+    });
+  } catch (err) {
+    console.error("❌ Get Landlord Applications Error:", err);
+    res.status(500).json({ error: "Failed to get applications" });
+  }
+});
+
+// ----------------------------------------------------------------------------------------------
+// API: Update Application Status (Accept/Reject) by Landlord
+app.patch("/api/applications/:applicationId/status", async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { status, landlordId } = req.body; // Added landlordId for verification
+
+    // Validate applicationId
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
+      return res.status(400).json({ error: "Invalid application ID" });
+    }
+
+    // Validate status
+    if (!["Accepted", "Rejected"].includes(status)) {
+      return res.status(400).json({ error: "Status must be 'Accepted' or 'Rejected'" });
+    }
+
+    // Find the application with property details
+    const application = await Application.findById(applicationId)
+      .populate('propertyId', 'userId title location rent');
+
+    if (!application) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
+    // Verify that the landlord owns this property (optional security check)
+    if (landlordId && application.propertyId.userId.toString() !== landlordId) {
+      return res.status(403).json({ error: "Unauthorized: You don't own this property" });
+    }
+
+    // Update application status
+    const updatedApplication = await Application.findByIdAndUpdate(
+      applicationId,
+      { status, updatedAt: new Date() },
+      { new: true }
+    ).populate('applicantId', 'name email phone gender occupation')
+     .populate('propertyId', 'title location rent numberOfTenants');
+
+    // Optional: Send notification email to applicant (you can implement this later)
+    const statusMessage = status === "Accepted" ? "accepted" : "rejected";
+    console.log(`📧 Application ${statusMessage} for ${updatedApplication.propertyId.title}`);
+
+    res.status(200).json({ 
+      message: `Application ${statusMessage} successfully`, 
+      application: updatedApplication 
+    });
+  } catch (err) {
+    console.error("❌ Update Application Status Error:", err);
+    res.status(500).json({ error: "Failed to update application status" });
+  }
+});
+
+// ----------------------------------------------------------------------------------------------
+// API: Get Application Details by ID (for landlord to view full details)
+app.get("/api/applications/:applicationId", async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+
+    // Validate applicationId
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
+      return res.status(400).json({ error: "Invalid application ID" });
+    }
+
+    // Find application with all details
+    const application = await Application.findById(applicationId)
+      .populate('applicantId', 'name email phone gender occupation role')
+      .populate('propertyId', 'title location rent numberOfTenants description amenities photos userId')
+      .populate('propertyId.userId', 'name email phone'); // Populate landlord details too
+
+    if (!application) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
+    res.status(200).json({ application });
+  } catch (err) {
+    console.error("❌ Get Application Details Error:", err);
+    res.status(500).json({ error: "Failed to get application details" });
+  }
+});
