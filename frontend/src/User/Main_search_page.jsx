@@ -3,11 +3,6 @@ import { useNavigate } from "react-router-dom";
 import arrowBack from "../assets/arrow_back.svg";
 import loginBackgroundDesign1 from "../assets/login-background-design-1.png";
 import search from "../assets/search.png";
-import rectangle112 from "../assets/Rectangle12.svg";
-import rectangle113 from "../assets/Rectangle13.svg";
-import rectangle114 from "../assets/Rectangle14.svg";
-import rectangle115 from "../assets/Rectangle15.svg";
-import rectangle11 from "../assets/Rectangle11.svg";
 import rentmeLogo1 from "../assets/RentMe-Logo-2.png";
 
 export const MainSearchPage = () => {
