@@ -24,35 +24,42 @@ export const LoginPage = () => {
       });
 
       const data = await response.json();
-      console.log("Login response data:", data); // Debug log
+      console.log("Login response data:", data);
 
       if (!response.ok) {
         throw new Error(data.error || "Login failed");
       }
 
-      setSuccess("Login successful ✅");
-
-      // Save authentication data
+      // ✅ Save authentication data
       localStorage.setItem("token", data.token);
       localStorage.setItem("userId", data.user.id);
       localStorage.setItem("role", data.user.role);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      console.log("Stored user:", localStorage.getItem("user"));
+      setSuccess("Login successful ✅");
+      setLoading(false);
 
-      // Redirect based on role
+      // ✅ Check for token before redirect
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found. Please login again.");
+      }
+
+      // ✅ Redirect based on role
       if (data.user.role === "Landlord") {
-        window.location.href = "/property"; // Landlord → Property page
+        // Pass profile details via query params (safe option)
+        const name = encodeURIComponent(data.user.name || "");
+        const email = encodeURIComponent(data.user.email || "");
+        window.location.href = `/myproperties?name=${name}&email=${email}`;
       } else if (data.user.role === "Tenant") {
-        window.location.href = "/mainsearch"; // Tenant → Search page
+        window.location.href = "/mainsearch";
       } else if (data.user.role === "Admin") {
-        window.location.href = "/admin-dashboard"; // Admin → Dashboard
+        window.location.href = "/admin-dashboard";
       } else {
-        window.location.href = "/"; // Fallback
+        window.location.href = "/";
       }
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   };
