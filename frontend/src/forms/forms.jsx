@@ -31,7 +31,7 @@ export const UserUnderstandingForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/api/ai/users", {
+      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/ai/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

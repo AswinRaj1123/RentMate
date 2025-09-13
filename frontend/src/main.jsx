@@ -7,6 +7,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { MainPage } from "./components/main_page/main_page.jsx";
 import { MainSearchPage } from "./User/Main_search_page.jsx";
+import { UserUnderstandingForm } from "./components/User_understanding_form/User_understanding_form.jsx";
 
 // 🔹 Authentication
 import { LoginPage } from "./components/login_page/login_page.jsx"; 
@@ -39,6 +40,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/mainsearch" element={<MainSearchPage />} />
+        <Route path="/user-understanding" element={<UserUnderstandingForm />} />
 
         {/* ----------------- Authentication ----------------- */}
         <Route path="/login" element={<LoginPage />} />
