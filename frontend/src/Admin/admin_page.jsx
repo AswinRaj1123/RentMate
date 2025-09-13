@@ -1,59 +1,86 @@
-import React from "react";
-// import { Component } from "./Component";
-import image from "../assets/image.png";
+import React, { useEffect, useState } from "react";
+import { ProfilePage } from "../components/Profile_page/Profile_page.jsx";
 
 export const AdminPage = () => {
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    // Fetch all properties
+    useEffect(() => {
+        const fetchProperties = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch("http://localhost:3000/api/search-properties");
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || "Failed to fetch properties");
+                setProperties(data.properties);
+            } catch (err) {
+                setError(err.message);
+            }
+            setLoading(false);
+        };
+        fetchProperties();
+    }, []);
+
+    // Delete property handler
+    const handleDelete = async (propertyId) => {
+        if (!window.confirm("Are you sure you want to delete this property?")) return;
+        try {
+            const res = await fetch(`http://localhost:3000/api/property/${propertyId}`, {
+                method: "DELETE",
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Failed to delete property");
+            setProperties((prev) => prev.filter((p) => p._id !== propertyId));
+        } catch (err) {
+            alert(err.message);
+        }
+    };
+
     return (
-        <div className="bg-[#f5f7fa] grid justify-items-center [align-items:start] w-screen">
-            <div className="bg-[#f5f7fa] w-[1512px] h-[982px]">
-                <div className="relative w-[369px] h-[231px] top-[115px] left-[305px]">
-                    <div className="absolute w-[369px] h-[231px] top-0 left-0">
-                        <div className="relative w-[375px] h-[231px]">
-                            <div className="absolute w-[375px] h-[231px] top-0 left-0">
-                                <div className="relative w-[365px] h-[231px] bg-[#eeeeee] rounded-[14px] shadow-[0px_4px_4px_#00000040]">
-                                    <img
-                                        className="absolute w-[94px] h-[106px] top-[11px] left-[23px] object-cover"
-                                        alt="Image"
-                                        src={image}
-                                    />
+        <div className="bg-[#f5f7fa] min-h-screen flex flex-col md:flex-row">
+            {/* Sidebar/Profile */}
+            <aside className="w-full md:w-80 lg:w-96 bg-white border-r shadow flex-shrink-0 flex flex-col items-center py-8 px-4">
+                <ProfilePage />
+            </aside>
 
-                                    <div className="absolute w-[141px] h-[61px] top-7 left-[143px]">
-                                        <div className="absolute w-[141px] top-0 left-0 font-m3-body-large font-[number:var(--m3-body-large-font-weight)] text-black text-[length:var(--m3-body-large-font-size)] tracking-[var(--m3-body-large-letter-spacing)] leading-[var(--m3-body-large-line-height)] [font-style:var(--m3-body-large-font-style)]">
-                                            Trinity Haven
-                                        </div>
-
-                                        <div className="absolute w-[85px] top-[37px] left-14 font-m3-body-medium font-[number:var(--m3-body-medium-font-weight)] text-black text-[length:var(--m3-body-medium-font-size)] tracking-[var(--m3-body-medium-letter-spacing)] leading-[var(--m3-body-medium-line-height)] whitespace-nowrap [font-style:var(--m3-body-medium-font-style)]">
-                                            ₹ 1,25,000
-                                        </div>
-
-                                        <div className="absolute w-[50px] top-[37px] left-0 font-m3-body-medium font-[number:var(--m3-body-medium-font-weight)] text-black text-[length:var(--m3-body-medium-font-size)] tracking-[var(--m3-body-medium-letter-spacing)] leading-[var(--m3-body-medium-line-height)] [font-style:var(--m3-body-medium-font-style)]">
-                                            Pricing
-                                        </div>
-                                    </div>
-
-                                    <div className="absolute w-[73px] top-[119px] left-[23px] font-m3-body-medium font-[number:var(--m3-body-medium-font-weight)] text-black text-[length:var(--m3-body-medium-font-size)] tracking-[var(--m3-body-medium-letter-spacing)] leading-[var(--m3-body-medium-line-height)] [font-style:var(--m3-body-medium-font-style)]">
-                                        Location
-                                    </div>
-
-                                    <div className="absolute w-[77px] top-[155px] left-[23px] font-m3-body-medium font-[number:var(--m3-body-medium-font-weight)] text-[#1e1e1e] text-[length:var(--m3-body-medium-font-size)] tracking-[var(--m3-body-medium-letter-spacing)] leading-[var(--m3-body-medium-line-height)] [font-style:var(--m3-body-medium-font-style)]">
-                                        Description
-                                    </div>
+            {/* Main Content */}
+            <main className="flex-1 p-4 md:p-8">
+                <h1 className="text-2xl font-bold mb-6">All Properties</h1>
+                {loading ? (
+                    <div>Loading...</div>
+                ) : error ? (
+                    <div className="text-red-500">{error}</div>
+                ) : (
+                    <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {properties.map((prop) => (
+                            <div key={prop._id} className="bg-[#eeeeee] rounded-[14px] shadow p-4 flex flex-col relative">
+                                <img
+                                    className="w-full h-32 object-cover rounded mb-4"
+                                    alt={prop.title}
+                                    src={prop.photos?.[0] || "/default-property.jpg"}
+                                />
+                                <div className="font-semibold text-black text-lg mb-1">{prop.title}</div>
+                                <div className="text-black text-base mb-1">Pricing: ₹{prop.rent}</div>
+                                <div className="text-black text-sm mb-1">
+                                    <span className="font-semibold">Location:</span> {prop.location}
                                 </div>
+                                <div className="text-black text-sm mb-1">
+                                    <span className="font-semibold">Description:</span> {prop.description}
+                                </div>
+                                {/* Delete Button */}
+                                <button
+                                    className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                                    onClick={() => handleDelete(prop._id)}
+                                >
+                                    Delete
+                                </button>
                             </div>
-
-                            <p className="absolute w-[219px] top-[121px] left-[105px] [font-family:'Roboto-Regular',Helvetica] font-normal text-black text-[10px] tracking-[0.25px] leading-5 whitespace-nowrap">
-                                Electronic City Phase I, Bengaluru, Karnataka
-                            </p>
-
-                            <p className="absolute w-[219px] top-[155px] left-[105px] [font-family:'Roboto-Regular',Helvetica] font-normal text-black text-[10px] tracking-[0.25px] leading-5">
-                                Spacious 3-Bedroom Family Home with Large Backyard
-                            </p>
-                        </div>
+                        ))}
                     </div>
-
-                    {/* <Component className="!absolute !left-[309px] !top-[26px]" /> */}
-                </div>
-            </div>
+                )}
+            </main>
         </div>
     );
 };
