@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import arrowBack from "../assets/arrow_back.svg";
 import rentmeLogo1 from "../assets/rentme-logo-transparent-1.png";
 import { LandlordProfile } from "../components/Landlord_profile/Landlord_profile.jsx";
+import elementAvatars from "../assets/elementavatar.png";
 
 export const PropertyPage = () => {
   const [title, setTitle] = useState("");
@@ -14,8 +15,7 @@ export const PropertyPage = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Get userId from localStorage (must be set after login)
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId"); // ✅ userId check
 
   const handlePhotoChange = (e) => {
     setPhotos([...e.target.files]);
@@ -26,14 +26,12 @@ export const PropertyPage = () => {
     setLoading(true);
     setMessage("");
 
-    // Ensure userId is present
     if (!userId) {
       setMessage("⚠️ You must be logged in to add a property.");
       setLoading(false);
       return;
     }
 
-    // Convert amenities into array
     const amenitiesArr = amenities
       .split(",")
       .map((a) => a.trim())
@@ -45,10 +43,10 @@ export const PropertyPage = () => {
       userId,
       title,
       location,
-      rent: Number(rent), // backend expects number
+      rent: Number(rent),
       description,
       amenities: amenitiesArr,
-      numberOfTenants: Number(numberOfTenants), // backend expects number
+      numberOfTenants: Number(numberOfTenants),
       photos: photoNames,
     };
 
@@ -57,9 +55,7 @@ export const PropertyPage = () => {
     try {
       const res = await fetch("http://localhost:3000/api/property", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -67,7 +63,6 @@ export const PropertyPage = () => {
 
       if (res.ok) {
         setMessage("✅ Property added successfully!");
-        // reset form
         setTitle("");
         setLocation("");
         setRent("");
@@ -90,21 +85,30 @@ export const PropertyPage = () => {
     <div className="bg-[#f5f7fa] min-h-screen flex">
       {/* Sidebar */}
       <LandlordProfile />
+
       {/* Main Content */}
       <main className="flex-1 ml-64 flex justify-center items-start sm:items-center py-6">
         <div className="bg-[#f5f7fa] w-full max-w-[393px] sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative rounded-lg shadow-lg">
-          {/* Logo */}
+          
+          {/* Logo (top-left) */}
           <img
-            className="absolute w-[50px] sm:w-[60px] top-6 right-6 sm:right-10 aspect-[1] object-cover"
+            className="absolute w-[50px] sm:w-[60px] top-6 left-6 aspect-[1] object-cover"
             alt="Rentme logo"
             src={rentmeLogo1}
           />
 
-          {/* Back button */}
+          {/* Back button (only on mobile) */}
           <img
             src={arrowBack}
             alt="Back"
-            className="absolute w-[25px] sm:w-[30px] top-6 left-6 cursor-pointer"
+            className="absolute w-[25px] sm:w-[30px] top-6 left-20 sm:left-28 cursor-pointer block md:hidden"
+          />
+
+          {/* Avatar (top-right) */}
+          <img
+            src={elementAvatars}
+            alt="User Avatar"
+            className="absolute w-[40px] h-[40px] rounded-full object-cover top-6 right-6 sm:right-10"
           />
 
           {/* Form */}
