@@ -2,7 +2,7 @@
 // Change this to switch between local and production backend
 
 // For local development:
-export const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "https://rentmate-zyvb.onrender.com";
 
 // For production:
 // export const API_BASE_URL = "https://rentmate-backend-4cdc.onrender.com";
