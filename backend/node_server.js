@@ -32,6 +32,22 @@ app.use(cors({
   credentials: true
 }));
 
+// Root endpoint
+app.get("/", (req, res) => {
+  res.json({
+    message: "RentMate API is running 🏠",
+    version: "1.0.0",
+    endpoints: {
+      health: "/health",
+      auth: {
+        signup: "/signup",
+        verifyOTP: "/verify-otp",
+        login: "/login"
+      }
+    }
+  });
+});
+
 // Health check API
 app.get("/health", (req, res) => {
   res.json({
