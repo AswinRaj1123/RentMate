@@ -243,10 +243,6 @@ app.get("/api/property/:userId", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
 
 
 // ----------------------------------------------------------------------------------------------
@@ -1003,17 +999,35 @@ app.get("/api/landlord/:landlordId/properties", async (req, res) => {
   }
 });
 
-// ✅ Add this endpoint to get all properties
+// ✅ Get all properties with pagination to prevent oversized responses
 app.get("/api/properties", async (req, res) => {
   try {
-    console.log("🔍 Fetching all properties");
+    const { page = 1, limit = 20 } = req.query;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
     
-    // Find all properties and populate userId with user details
-    const properties = await Property.find({}).populate('userId', 'name email role');
+    console.log(`🔍 Fetching properties - Page: ${page}, Limit: ${limit}`);
     
-    console.log(`✅ Found ${properties.length} properties`);
+    // Get properties with pagination
+    const properties = await Property.find({})
+      .populate('userId', 'name email role')
+      .skip(skip)
+      .limit(parseInt(limit))
+      .sort({ createdAt: -1 });
     
-    res.status(200).json(properties);
+    // Get total count
+    const totalProperties = await Property.countDocuments({});
+    
+    console.log(`✅ Found ${properties.length} properties (Total: ${totalProperties})`);
+    
+    res.status(200).json({
+      properties,
+      pagination: {
+        currentPage: parseInt(page),
+        totalPages: Math.ceil(totalProperties / parseInt(limit)),
+        totalProperties,
+        hasNextPage: skip + properties.length < totalProperties
+      }
+    });
     
   } catch (error) {
     console.error("❌ Error fetching properties:", error);
@@ -1114,3 +1128,6 @@ app.get("/api/recommend/:userId", async (req, res) => {
 });
 
 // -------------------- Start Server --------------------
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
