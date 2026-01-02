@@ -43,48 +43,56 @@ export const ProfilePage = () => {
     window.location.href = "/login";
   };
   return (
-    // <div className="bg-[#f5f7fa] grid justify-items-center items-start w-screen">
-    //   <div className="bg-[#f5f7fa] overflow-hidden w-[1512px] h-[982px]">
-        <div className="relative w-[281px] h-[982px] top-[5px] bg-white rounded shadow-md">
-          <img
-            className="absolute w-44 h-44 top-[94px] left-[68px] object-cover"
-            alt="Rentme logo"
-            src={rentmeLogo2}
-          />
+        <div className="h-full w-full bg-white flex flex-col p-6">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <img
+              className="w-32 h-32 object-cover"
+              alt="Rentme logo"
+              src={rentmeLogo2}
+            />
+          </div>
 
-          <div className="h-[163px] top-[405px] left-[30px] absolute w-[251px]">
-            <div className="absolute w-[251px] -top-px left-0 font-semibold text-neutral-500 text-base">
-              Profile
-            </div>
+          {/* Profile Section */}
+          <div className="flex-1">
+            <div className="mb-4">
+              <div className="font-semibold text-neutral-500 text-sm mb-4">
+                Profile
+              </div>
 
-            <div className="flex h-12 items-center gap-2 top-[166px] left-0 absolute w-[251px]">
-              <div className="flex flex-col items-start gap-1 relative flex-1">
+              {/* Avatar */}
+              <div className="flex justify-center mb-4">
+                <img
+                  className="w-24 h-24 object-cover rounded-full"
+                  alt="Avatar"
+                  src={avatar}
+                />
+              </div>
+
+              {/* User Info */}
+              <div className="text-center space-y-1">
                 <div className="font-semibold text-neutral-800 text-base">
                   {loading ? "Loading..." : (user ? user.name : "Guest User")}
                 </div>
-                <div className="font-semibold text-neutral-400 text-base">
+                <div className="font-semibold text-neutral-400 text-sm break-words">
                   {loading ? "Loading..." : (user ? user.email : "Please log in")}
                 </div>
               </div>
             </div>
-
-            <img
-              className="absolute w-[121px] h-[121px] top-[22px] left-[46px] object-cover"
-              alt="Avatar"
-              src={avatar}
-            />
           </div>
 
-          <div className="flex w-[214px] items-center justify-center gap-1 px-2 py-1.5 absolute top-[894px] left-[30px] bg-neutral-50 rounded cursor-pointer" onClick={user ? handleLogout : () => window.location.href = "/login"}>
-            <img src={LeftIcon} alt={user ? "Logout icon" : "Login icon"} className="!relative !w-5 !h-5" />
-            <div className="inline-flex items-center justify-center px-1">
+          {/* Logout Button - Always at bottom */}
+          <div className="mt-auto">
+            <button 
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-neutral-50 hover:bg-neutral-100 rounded cursor-pointer transition-colors" 
+              onClick={user ? handleLogout : () => window.location.href = "/login"}
+            >
+              <img src={LeftIcon} alt={user ? "Logout icon" : "Login icon"} className="w-5 h-5" />
               <div className="font-semibold text-neutral-800 text-base">
                 {user ? "Log out" : "Log in"}
               </div>
-            </div>
+            </button>
           </div>
         </div>
-    //   </div>
-    // </div>
   );
 };

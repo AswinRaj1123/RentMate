@@ -3,6 +3,7 @@ import arrowBack from "../assets/arrow_back.svg";
 import rentmeLogo1 from "../assets/rentme-logo-transparent-1.png";
 import { LandlordProfile } from "../components/Landlord_profile/Landlord_profile.jsx";
 import elementAvatars from "../assets/elementavatar.png";
+import { API_BASE_URL } from "../config";
 
 export const PropertyPage = () => {
   const [title, setTitle] = useState("");
@@ -65,7 +66,7 @@ export const PropertyPage = () => {
 
     try {
       // ✅ Using the new Render backend URL
-      const res = await fetch("https://rentmate-backend-4cdc.onrender.com/api/property", {
+      const res = await fetch(`${API_BASE_URL}/api/property`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ElementAvatars from "../assets/elementavatar.png";
 import loginBackgroundDesign1 from "../assets/login-background-design-2.png";
 import { LandlordProfile } from "../components/Landlord_profile/Landlord_profile.jsx";
+import { API_BASE_URL } from "../config";
 
 export const ViewApplication = () => {
   const [applications, setApplications] = useState([]);
@@ -23,7 +24,7 @@ export const ViewApplication = () => {
       try {
         // ✅ Use the new Render backend URL
         const res = await fetch(
-          `https://rentmate-backend-4cdc.onrender.com/api/landlord/${landlordId}/applications`
+          `${API_BASE_URL}/api/landlord/${landlordId}/applications`
         );
         const data = await res.json();
         if (res.ok) {
@@ -46,7 +47,7 @@ export const ViewApplication = () => {
     try {
       // ✅ Use the new Render backend URL
       const res = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/applications/${applicationId}/status`,
+        `${API_BASE_URL}/api/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

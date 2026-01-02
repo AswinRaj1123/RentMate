@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import loginBackgroundDesign1 from "../../assets/login-background-design-1.png";
 import rentmeLogoTransparent1 from "../../assets/rentme-logo-transparent-1.png";
+import { API_BASE_URL } from "../../config";
 
 export const ForgetAuth = () => {
     const [otp, setOtp] = useState("");
@@ -40,7 +41,7 @@ export const ForgetAuth = () => {
 
         try {
             // Call the verify OTP API
-            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/verify-reset-otp", {
+            const response = await fetch(`${API_BASE_URL}/api/verify-reset-otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,7 +70,7 @@ export const ForgetAuth = () => {
         setError("");
 
         try {
-            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/resend-reset-otp", {
+            const response = await fetch(`${API_BASE_URL}/api/resend-reset-otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

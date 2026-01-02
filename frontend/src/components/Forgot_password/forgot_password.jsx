@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginBackgroundDesign2 from "../../assets/login-background-design-2.png";
 import rentmeLogoTransparent1 from "../../assets/rentme-logo-transparent-1.png";
+import { API_BASE_URL } from "../../config";
 
 export const ForgetPassword = () => {
     const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export const ForgetPassword = () => {
         setError("");
 
         try {
-            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/forgot-password", {
+            const response = await fetch(`${API_BASE_URL}/api/forgot-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

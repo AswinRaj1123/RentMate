@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import rentmeLogoTransparent1 from "../../assets/rentme-logo-transparent-1.png";
 import flag from "../../assets/flag.png";
+import { API_BASE_URL } from "../../config";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export const SignUpPage = () => {
       setLoading(true);
       
       // Step 1: Request OTP
-      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/request-otp", {
+      const response = await fetch(`${API_BASE_URL}/api/request-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

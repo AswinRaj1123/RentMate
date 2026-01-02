@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import loginBackgroundDesign1 from "../assets/login-background-design-2.png";
+import { API_BASE_URL } from "../config";
 
 export const UserUnderstandingForm = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ export const UserUnderstandingForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/ai/users", {
+      const response = await fetch(`${API_BASE_URL}/api/ai/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

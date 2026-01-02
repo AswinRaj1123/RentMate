@@ -6,6 +6,7 @@ import image3 from "../assets/image3.png";
 import loginBackgroundDesign2 from "../assets/login-background-design-2.png";
 import rupee1 from "../assets/rupee1.png";
 import { ProfilePage } from "../components/Profile_page/Profile_page.jsx";
+import { API_BASE_URL } from "../config";
 
 export const PropertyDetails = () => {
   const location = useLocation();
@@ -35,7 +36,7 @@ export const PropertyDetails = () => {
       setError("");
 
       const response = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/property/details/${propertyId}`
+        `${API_BASE_URL}/api/property/details/${propertyId}`
       );
       const data = await response.json();
 
@@ -79,7 +80,7 @@ export const PropertyDetails = () => {
       }
 
       const response = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/property/${property._id}/apply`,
+        `${API_BASE_URL}/api/property/${property._id}/apply`,
         {
           method: "POST",
           headers: {

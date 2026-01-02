@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/search.png";
 import image from "../assets/image.png";
 import { ProfilePage } from "../components/Profile_page/Profile_page.jsx";
+import { API_BASE_URL } from "../config";
 
 // filepath: d:\college_project\RentMate-1\frontend\src\User\Search_page.jsx
 
@@ -41,7 +42,7 @@ export const SearchResultPage = () => {
             params.append('page', '1');
             params.append('limit', '10');
 
-            const response = await fetch(`https://rentmate-backend-4cdc.onrender.com/api/search-properties?${params.toString()}`);
+            const response = await fetch(`${API_BASE_URL}/api/search-properties?${params.toString()}`);
             const data = await response.json();
 
             if (response.ok) {
@@ -70,13 +71,14 @@ export const SearchResultPage = () => {
         }
     };
     return (
-        <div className="flex min-h-screen bg-[#f5f7fa]">
-            {/* Sidebar */}
-            <div className="w-72 bg-white border-r">
+        <div className="flex h-screen bg-[#f5f7fa] w-full overflow-hidden">
+            {/* Sidebar - Fixed, No Scroll */}
+            <div className="w-56 lg:w-64 bg-white border-r flex-shrink-0">
                 <ProfilePage />
             </div>
-            {/* Main Content */}
-            <div className="flex-1 p-8">
+            {/* Main Content - Scrollable */}
+            <div className="flex-1 overflow-y-auto">
+                <div className="p-4 md:p-6 lg:p-8">
                 {/* Search Bar */}
                 <div className="max-w-2xl mx-auto mb-4 relative">
                     <div className="flex items-center bg-white rounded-full shadow-md p-3">
@@ -234,6 +236,7 @@ export const SearchResultPage = () => {
                         </div>
                     </div>
                 )}
+                </div>
             </div>
         </div>
     );

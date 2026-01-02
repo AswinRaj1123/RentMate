@@ -3,6 +3,7 @@ import { FiEyeOff, FiEye } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import loginBackgroundDesign1 from "../../assets/login-background-design-1.png";
 import rentmeLogoTransparent2 from "../../assets/rentme-logo-transparent-1.png";
+import { API_BASE_URL } from "../../config";
 
 export const ResetPassword = () => {
     const [password, setPassword] = useState("");
@@ -53,7 +54,7 @@ export const ResetPassword = () => {
         setError("");
 
         try {
-            const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/reset-password", {
+            const response = await fetch(`${API_BASE_URL}/api/reset-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

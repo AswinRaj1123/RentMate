@@ -7,7 +7,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { MainPage } from "./components/main_page/main_page.jsx";
 import { MainSearchPage } from "./User/Main_search_page.jsx";
-import { UserUnderstandingForm } from "./components/User_understanding_form/User_understanding_form.jsx";
+import { UserUnderstandingForm } from "./forms/forms.jsx";
 
 // 🔹 Authentication
 import { LoginPage } from "./components/login_page/login_page.jsx"; 

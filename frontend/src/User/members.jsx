@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import loginBackgroundDesign3 from "../assets/login-background-design-2.png";
 import Person from "../assets/person.png";
+import { API_BASE_URL } from "../config";
 
 export const MemberDetails = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ export const MemberDetails = () => {
       setError("");
 
       const res = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}/applications`
+        `${API_BASE_URL}/api/property/${propertyId}/applications`
       );
       const data = await res.json();
 
@@ -63,7 +64,7 @@ export const MemberDetails = () => {
   const updateStatus = async (applicationId, status) => {
     try {
       const res = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/applications/${applicationId}/status`,
+        `${API_BASE_URL}/api/applications/${applicationId}/status`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -99,7 +100,7 @@ export const MemberDetails = () => {
     try {
       // Example API call (adjust URL & payload to match your backend)
       const res = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}/room-sharing`,
+        `${API_BASE_URL}/api/property/${propertyId}/room-sharing`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

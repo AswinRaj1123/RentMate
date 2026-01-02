@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import loginBackgroundDesign1 from "../../assets/login-background-design-1.png";
 import rentmeLogoTransparent1 from "../../assets/rentme-logo-transparent-1.png";
+import { API_BASE_URL } from "../../config";
 
 export const OtpPage = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export const OtpPage = () => {
 
     try {
       // Step 1: Verify OTP
-      const otpResponse = await fetch("https://rentmate-backend-4cdc.onrender.com/api/verify-otp", {
+      const otpResponse = await fetch(`${API_BASE_URL}/api/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: code }),
@@ -78,7 +79,7 @@ export const OtpPage = () => {
       }
 
       // Step 2: Create user account after successful OTP verification
-      const userResponse = await fetch("https://rentmate-backend-4cdc.onrender.com/api/users", {
+      const userResponse = await fetch(`${API_BASE_URL}/api/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -114,7 +115,7 @@ export const OtpPage = () => {
     setError("");
 
     try {
-      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/resend-otp", {
+      const response = await fetch(`${API_BASE_URL}/api/resend-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

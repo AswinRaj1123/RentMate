@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import elementAvatars from "../assets/elementavatar.png";
 import loginBackgroundDesign1 from "../assets/login-background-design-1.png";
 import { LandlordProfile } from "../components/Landlord_profile/Landlord_profile.jsx";
+import { API_BASE_URL } from "../config";
 
 export const MyProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -26,7 +27,7 @@ export const MyProperties = () => {
 
       try {
         // ✅ Use the new Render backend URL
-        const response = await fetch(`https://rentmate-backend-4cdc.onrender.com/api/properties`);
+        const response = await fetch(`${API_BASE_URL}/api/properties`);
         
         console.log("📡 Response status:", response.status);
         
@@ -82,7 +83,7 @@ export const MyProperties = () => {
       console.log("🗑️ Deleting property:", propertyId);
       
       const response = await fetch(
-        `https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}`,
+        `${API_BASE_URL}/api/property/${propertyId}`,
         {
           method: "DELETE",
           headers: {

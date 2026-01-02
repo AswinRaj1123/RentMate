@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import loginBackgroundDesign1 from "../../assets/login-background-design-1.png";
 import rentmeLogoTransparent1 from "../../assets/rentme-logo-transparent-1.png";
+import { API_BASE_URL } from "../../config";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ export const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("https://rentmate-backend-4cdc.onrender.com/api/login", {
+      const response = await fetch(`${API_BASE_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, rememberMe }),
