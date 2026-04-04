@@ -27,42 +27,45 @@ export const MyProperties = () => {
 
       try {
         // ✅ Use the new Render backend URL
-        const response = await fetch(`${API_BASE_URL}/api/properties`);
-        
+        const response = await fetch(`${API_BASE_URL}/api/properties`, {
+          cache: "no-store",
+        });
+
         console.log("📡 Response status:", response.status);
-        
+
         if (response.ok) {
           const data = await response.json();
-          console.log("📦 All properties data:", data);
-          
+          const allProperties = Array.isArray(data) ? data : (data.properties || []);
+          console.log("📦 All properties data:", allProperties);
+
           // ✅ Filter properties to only show properties owned by this landlord
-          const landlordProperties = data.filter(property => {
+          const landlordProperties = allProperties.filter(property => {
             // Handle different ways userId might be stored
             const propertyUserId = property.userId?._id || property.userId;
             const match = propertyUserId === landlordId || propertyUserId?.toString() === landlordId;
-            
+
             if (match) {
               console.log("✅ Property match found:", property.title, "| Property userId:", propertyUserId);
             }
-            
+
             return match;
           });
-          
+
           setProperties(landlordProperties || []);
           console.log(`✅ Found ${landlordProperties?.length || 0} properties for landlord ${landlordId}`);
-          
+
           if (landlordProperties.length === 0) {
             console.log("🔍 Debug: No properties found for this landlord");
-            console.log("🔍 All property userIds:", data.map(p => ({ title: p.title, userId: p.userId?._id || p.userId })));
+            console.log("🔍 All property userIds:", allProperties.map(p => ({ title: p.title, userId: p.userId?._id || p.userId })));
           }
         } else {
-          const data = await response.json();
-          const errorMessage = data.error || "Failed to fetch properties";
+          const data = await response.json().catch(() => ({}));
+          const errorMessage = data.error || `Failed to fetch properties (HTTP ${response.status})`;
           setError(errorMessage);
           console.error("❌ API Error:", errorMessage);
         }
       } catch (err) {
-        const errorMessage = "Network error. Please try again.";
+        const errorMessage = "Unable to load properties. Please try again.";
         setError(errorMessage);
         console.error("❌ Fetch Properties Error:", err);
       } finally {
@@ -126,19 +129,19 @@ export const MyProperties = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa] flex">
+    <div className="min-h-screen bg-[#f5f7fa] flex flex-col md:flex-row">
       {/* Sidebar */}
       <LandlordProfile />
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 flex justify-center items-center relative overflow-hidden">
-        <div className="bg-white shadow-lg rounded-lg w-[95%] max-w-5xl p-6 relative z-10">
-          <div className="flex items-center justify-between border-b pb-4 mb-6">
+      <main className="flex-1 ml-0 md:ml-64 flex justify-center items-start md:items-center relative overflow-visible md:overflow-hidden px-3 sm:px-4 py-4 md:py-0">
+        <div className="bg-white shadow-lg rounded-lg w-full md:w-[95%] max-w-5xl p-4 sm:p-6 relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b pb-4 mb-6">
             <div>
               <h2 className="text-xl font-bold text-gray-800">My Properties</h2>
               <p className="text-sm text-gray-500">Landlord ID: {landlordId}</p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <button 
                 onClick={() => window.location.href = '/addproperty'}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"

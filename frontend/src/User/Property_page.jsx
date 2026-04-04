@@ -125,12 +125,12 @@ export const PropertyDetails = () => {
   if (loading) {
     return (
       <div className="bg-[#f5f7fa] min-h-screen flex flex-col md:flex-row">
-        <aside className="hidden md:flex md:flex-col md:w-72 lg:w-80 h-screen fixed top-0 left-0 z-20 bg-white border-r shadow">
+        <aside className="hidden md:flex md:flex-col md:w-72 lg:w-80 h-[100dvh] fixed top-0 left-0 z-20 bg-white border-r shadow overflow-y-auto">
           <div className="flex-1 flex flex-col items-center py-8 px-4">
             <ProfilePage />
           </div>
         </aside>
-        <main className="flex-1 flex justify-center items-center px-2 md:pl-80 w-full">
+        <main className="flex-1 flex justify-center items-center px-2 sm:px-4 md:pl-72 lg:pl-80 w-full min-h-screen">
           <div className="text-center py-8">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
             <p className="mt-2 text-gray-600">Loading property details...</p>
@@ -144,12 +144,12 @@ export const PropertyDetails = () => {
   if (error) {
     return (
       <div className="bg-[#f5f7fa] min-h-screen flex flex-col md:flex-row">
-        <aside className="hidden md:flex md:flex-col md:w-72 lg:w-80 h-screen fixed top-0 left-0 z-20 bg-white border-r shadow">
+        <aside className="hidden md:flex md:flex-col md:w-72 lg:w-80 h-[100dvh] fixed top-0 left-0 z-20 bg-white border-r shadow overflow-y-auto">
           <div className="flex-1 flex flex-col items-center py-8 px-4">
             <ProfilePage />
           </div>
         </aside>
-        <main className="flex-1 flex justify-center items-center px-2 md:pl-80 w-full">
+        <main className="flex-1 flex justify-center items-center px-2 sm:px-4 md:pl-72 lg:pl-80 w-full min-h-screen">
           <div className="text-center py-8">
             <p className="text-red-500 mb-4">{error}</p>
             <button
@@ -167,14 +167,14 @@ export const PropertyDetails = () => {
   return (
     <div className="bg-[#f5f7fa] min-h-screen flex flex-col md:flex-row">
       {/* Sidebar - Profile */}
-      <aside className="hidden md:flex md:flex-col md:w-72 lg:w-80 h-screen fixed top-0 left-0 z-20 bg-white border-r shadow">
+      <aside className="hidden md:flex md:flex-col md:w-72 lg:w-80 h-[100dvh] fixed top-0 left-0 z-20 bg-white border-r shadow overflow-y-auto">
         <div className="flex-1 flex flex-col items-center py-8 px-4">
           <ProfilePage />
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex justify-center items-center px-2 md:pl-80 w-full">
+      <main className="flex-1 flex justify-center items-center px-2 sm:px-4 md:pl-72 lg:pl-80 w-full min-h-screen">
         <div className="bg-white rounded-lg shadow-md p-4 md:p-8 flex flex-col md:flex-row gap-8 max-w-5xl w-full mt-8 md:mt-0">
           {/* Left Side - Images */}
           <div className="flex flex-col gap-4 md:w-1/2">
@@ -303,7 +303,7 @@ export const PropertyDetails = () => {
         </div>
 
         <img
-          className="absolute bottom-6 right-6 w-24 md:w-40 lg:w-56 opacity-70 pointer-events-none"
+          className="hidden md:block absolute bottom-6 right-6 w-24 md:w-40 lg:w-56 opacity-70 pointer-events-none"
           alt="Background"
           src={loginBackgroundDesign2}
         />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ProfilePage } from "../components/Profile_page/Profile_page.jsx";
+import { API_BASE_URL } from "../config";
 
 export const AdminPage = () => {
     const [properties, setProperties] = useState([]);
@@ -11,10 +12,13 @@ export const AdminPage = () => {
         const fetchProperties = async () => {
             setLoading(true);
             try {
-                const res = await fetch("https://rentmate-backend-4cdc.onrender.com/api/search-properties");
+                const res = await fetch(`${API_BASE_URL}/api/properties`, {
+                    cache: "no-store",
+                });
                 const data = await res.json();
+                const allProperties = Array.isArray(data) ? data : (data.properties || []);
                 if (!res.ok) throw new Error(data.error || "Failed to fetch properties");
-                setProperties(data.properties);
+                setProperties(allProperties);
             } catch (err) {
                 setError(err.message);
             }
@@ -27,7 +31,7 @@ export const AdminPage = () => {
     const handleDelete = async (propertyId) => {
         if (!window.confirm("Are you sure you want to delete this property?")) return;
         try {
-            const res = await fetch(`https://rentmate-backend-4cdc.onrender.com/api/property/${propertyId}`, {
+            const res = await fetch(`${API_BASE_URL}/api/property/${propertyId}`, {
                 method: "DELETE",
             });
             const data = await res.json();

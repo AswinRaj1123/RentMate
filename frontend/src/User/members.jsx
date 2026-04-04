@@ -125,7 +125,7 @@ export const MemberDetails = () => {
   };
 
   return (
-    <div className="min-h-screen w-screen overflow-x-hidden bg-[#f5f7fa] flex flex-col items-center relative">
+    <div className="min-h-screen w-full bg-[#f5f7fa] flex flex-col items-center relative px-4 sm:px-6">
       {/* Header */}
       <h2 className="mt-10 mb-8 text-2xl font-bold text-[#1a1a1a]">
         Members Applied
@@ -137,11 +137,11 @@ export const MemberDetails = () => {
 
       {/* Members Grid */}
       {!loading && !error && members.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mb-12 z-10">
           {members.map((mem) => (
             <div
               key={mem.id}
-              className="bg-white shadow border border-gray-300 rounded-xl p-6 flex flex-col min-w-[300px] max-w-[340px] w-full"
+              className="bg-white shadow border border-gray-300 rounded-xl p-4 sm:p-6 flex flex-col w-full sm:min-w-[300px] md:max-w-[340px]"
             >
               <div className="flex items-start mb-3">
                 <img

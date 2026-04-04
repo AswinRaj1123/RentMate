@@ -71,9 +71,9 @@ export const SearchResultPage = () => {
         }
     };
     return (
-        <div className="flex h-screen bg-[#f5f7fa] w-full overflow-hidden">
+        <div className="flex flex-col md:flex-row min-h-screen bg-[#f5f7fa] w-full">
             {/* Sidebar - Fixed, No Scroll */}
-            <div className="w-56 lg:w-64 bg-white border-r flex-shrink-0">
+            <div className="w-full md:w-56 lg:w-64 bg-white border-b md:border-b-0 md:border-r md:flex-shrink-0 max-h-[60vh] md:max-h-none overflow-y-auto">
                 <ProfilePage />
             </div>
             {/* Main Content - Scrollable */}

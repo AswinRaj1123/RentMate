@@ -16,7 +16,7 @@ if (!uri) {
 
 // Initialize express app
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -28,14 +28,45 @@ mongoose.connect(uri)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
-  // CORS Middleware
-  const cors = require("cors");
-app.use(cors({
-  origin: ["https://rentmate-six.vercel.app", "http://localhost:5173"], // Remove trailing slash and add localhost for development
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
+// CORS Middleware
+const cors = require("cors");
+
+const allowedExactOrigins = new Set([
+  "https://rentmate-six.vercel.app",
+  "http://localhost:5173",
+]);
+
+function isAllowedOrigin(origin) {
+  if (!origin) return true; // allow curl/Postman and same-origin requests
+  if (allowedExactOrigins.has(origin)) return true;
+
+  // Allow local frontend on any dev port (5173/5174/etc.)
+  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+    return true;
+  }
+
+  // Allow LAN testing on mobile devices (e.g., http://192.168.1.10:5173)
+  if (/^https?:\/\/(192\.168\.|10\.|172\.(1[6-9]|2\d|3[0-1])\.)(\d{1,3}\.){1,2}\d{1,3}(:\d+)?$/.test(origin)) {
+    return true;
+  }
+
+  return false;
+}
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // Root endpoint
 app.get("/", (req, res) => {

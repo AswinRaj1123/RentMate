@@ -110,7 +110,7 @@ export const MainSearchPage = () => {
         }
     };
     return (
-        <div className="bg-[#f5f7fa] min-h-screen w-full flex justify-center items-center px-4 py-6 overflow-hidden">
+        <div className="bg-[#f5f7fa] min-h-screen w-full flex flex-col justify-start md:justify-center items-center px-3 sm:px-4 py-4 sm:py-6 overflow-y-auto">
             <div className="bg-[#f5f7fa] w-full max-w-6xl">
                 <div className="flex items-start justify-between mb-6">
                     <div className="text-[#2e3a59] text-2xl md:text-3xl lg:text-4xl font-medium tracking-wide leading-tight">

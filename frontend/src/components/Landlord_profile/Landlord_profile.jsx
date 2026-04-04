@@ -11,7 +11,7 @@ export const LandlordProfile = () => {
   };
 
   return (
-    <div className="h-screen w-64 bg-[#f9fafb] border-r border-gray-200 flex flex-col justify-between items-center py-6 fixed top-0 left-0 z-30">
+    <div className="hidden md:flex h-[100dvh] w-64 bg-[#f9fafb] border-r border-gray-200 flex-col justify-between items-center py-6 fixed top-0 left-0 z-30 overflow-y-auto">
       
       {/* Top Section: Logo + Menu */}
       <div className="w-full flex flex-col items-center">

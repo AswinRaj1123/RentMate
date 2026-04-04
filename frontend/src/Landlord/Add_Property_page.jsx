@@ -101,17 +101,17 @@ export const PropertyPage = () => {
   };
 
   return (
-    <div className="bg-[#f5f7fa] min-h-screen flex">
+    <div className="bg-[#f5f7fa] min-h-screen flex flex-col md:flex-row">
       {/* Sidebar */}
       <LandlordProfile />
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 flex justify-center items-start sm:items-center py-6">
+      <main className="flex-1 ml-0 md:ml-64 flex justify-center items-start sm:items-center py-4 sm:py-6 px-3 sm:px-4 md:px-0">
         <div className="bg-[#f5f7fa] w-full max-w-[393px] sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl relative rounded-lg shadow-lg">
           
           {/* Logo (top-left) */}
           <img
-            className="absolute w-[50px] sm:w-[60px] top-6 left-6 aspect-[1] object-cover"
+            className="absolute w-10 sm:w-12 md:w-[50px] top-4 sm:top-6 left-4 sm:left-6 aspect-[1] object-cover"
             alt="Rentme logo"
             src={rentmeLogo1}
           />
@@ -120,7 +120,7 @@ export const PropertyPage = () => {
           <img
             src={arrowBack}
             alt="Back"
-            className="absolute w-[25px] sm:w-[30px] top-6 left-20 sm:left-28 cursor-pointer block md:hidden"
+            className="absolute w-5 sm:w-6 md:w-[30px] top-4 sm:top-6 left-16 sm:left-24 cursor-pointer block md:hidden"
             onClick={() => window.location.href = '/myproperties'}
           />
 
@@ -128,12 +128,12 @@ export const PropertyPage = () => {
           <img
             src={elementAvatars}
             alt="User Avatar"
-            className="absolute w-[40px] h-[40px] rounded-full object-cover top-6 right-6 sm:right-10"
+            className="absolute w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover top-4 sm:top-6 right-4 sm:right-8"
           />
 
           {/* Form */}
           <form
-            className="mt-24 sm:mt-28 bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-6 sm:p-8 space-y-6 overflow-y-auto max-h-[75vh]"
+            className="mt-16 sm:mt-24 md:mt-28 bg-white rounded-2xl border border-solid border-[#d1d9e6] shadow-[2px_4px_4px_#00000040] p-4 sm:p-6 md:p-8 space-y-6 overflow-y-auto max-h-[85vh] sm:max-h-[75vh]"
             onSubmit={handleSubmit}
           >
             {/* Header */}

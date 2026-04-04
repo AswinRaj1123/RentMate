@@ -113,7 +113,7 @@ export const SignUpPage = () => {
   };
 
   return (
-    <div className="bg-[#f5f7fa] h-screen w-screen flex items-center justify-center px-4">
+    <div className="bg-[#f5f7fa] min-h-screen w-full flex items-center justify-center px-3 sm:px-4 py-4">
       {/* Card */}
       <div className="bg-white w-full max-w-md rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8 flex flex-col items-center">
         {/* Logo */}

@@ -87,14 +87,14 @@ export const ViewApplication = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f7fa] flex">
+    <div className="min-h-screen bg-[#f5f7fa] flex flex-col md:flex-row">
       {/* Sidebar */}
       <LandlordProfile />
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 flex justify-center items-center relative overflow-hidden">
-        <div className="bg-white shadow-lg rounded-lg w-[95%] max-w-5xl p-6 relative z-10">
-          <div className="flex items-center justify-between border-b pb-4 mb-6">
+      <main className="flex-1 ml-0 md:ml-64 flex justify-center items-start md:items-center relative overflow-visible md:overflow-hidden px-3 sm:px-4 py-4 md:py-0">
+        <div className="bg-white shadow-lg rounded-lg w-full md:w-[95%] max-w-5xl p-4 sm:p-6 relative z-10">
+          <div className="flex items-center justify-between border-b pb-4 mb-6 gap-3">
             <h2 className="text-xl font-bold text-gray-800">View Applications</h2>
             <img
               src={ElementAvatars}
@@ -110,7 +110,8 @@ export const ViewApplication = () => {
               No applications found.
             </p>
           ) : (
-            <table className="w-full text-left border-collapse">
+            <div className="w-full overflow-x-auto">
+            <table className="w-full min-w-[680px] text-left border-collapse">
               <thead>
                 <tr className="border-b text-gray-600">
                   <th className="py-3 px-4">Tenant</th>
@@ -171,13 +172,14 @@ export const ViewApplication = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           )}
         </div>
 
         <img
           src={loginBackgroundDesign1}
           alt="Background Circles"
-          className="absolute bottom-4 right-4 w-60 opacity-90 pointer-events-none"
+          className="hidden md:block absolute bottom-4 right-4 w-60 opacity-90 pointer-events-none"
         />
       </main>
     </div>

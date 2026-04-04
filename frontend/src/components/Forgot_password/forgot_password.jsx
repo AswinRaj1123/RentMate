@@ -53,21 +53,21 @@ export const ForgetPassword = () => {
     };
 
     return (
-        <div className="bg-[#f5f7fa] grid justify-items-center [align-items:start] w-screen">
-            <div className="bg-[#f5f7fa] w-[1512px] h-[982px] relative">
+        <div className="bg-[#f5f7fa] min-h-screen w-full grid justify-items-center [align-items:start] px-4 py-6">
+            <div className="bg-[#f5f7fa] w-full max-w-[1512px] min-h-screen relative">
                 <img
-                    className="absolute w-[407px] h-[343px] top-[639px] left-[1105px] aspect-[1] object-cover"
+                    className="hidden lg:block absolute w-[407px] h-[343px] top-[639px] left-[1105px] aspect-[1] object-cover"
                     alt="Login background"
                     src={loginBackgroundDesign2}
                 />
 
                 <img
-                    className="absolute w-52 h-52 top-12 left-[652px] aspect-[1] object-cover"
+                    className="w-28 h-28 sm:w-40 sm:h-40 lg:w-52 lg:h-52 mx-auto mt-2 lg:absolute lg:top-12 lg:left-[652px] aspect-[1] object-cover"
                     alt="Rentme logo"
                     src={rentmeLogoTransparent1}
                 />
 
-                <div className="w-[621px] h-[251px] items-start gap-8 px-4 py-0 absolute top-[329px] left-[445px] flex flex-col">
+                <div className="w-full max-w-[621px] items-start gap-8 px-1 sm:px-4 py-0 mx-auto mt-8 lg:absolute lg:top-[329px] lg:left-[445px] flex flex-col">
                     <div className="items-center gap-3 relative self-stretch w-full flex-[0_0_auto] flex flex-col">
                         <div className="relative self-stretch mt-[-1.00px] font-title-screen font-[number:var(--title-screen-font-weight)] text-slate-800 text-[length:var(--title-screen-font-size)] text-center tracking-[var(--title-screen-letter-spacing)] leading-[var(--title-screen-line-height)] [font-style:var(--title-screen-font-style)]">
                             Forgot Password
@@ -106,7 +106,7 @@ export const ForgetPassword = () => {
                 <button 
                     onClick={handleSendResetInstruction}
                     disabled={loading}
-                    className="all-[unset] box-border flex w-[461px] items-start absolute top-[729px] left-[525px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                    className="all-[unset] box-border flex w-full max-w-[461px] items-start mx-auto mt-8 lg:absolute lg:top-[729px] lg:left-[525px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     <div className="flex items-center justify-center gap-2 px-3.5 py-3 relative flex-1 grow bg-[#2b8761] rounded-full overflow-hidden">
                         <div className="relative w-fit mt-[-2.00px] font-title-group font-[number:var(--title-group-font-weight)] text-white text-[length:var(--title-group-font-size)] text-center tracking-[var(--title-group-letter-spacing)] leading-[var(--title-group-line-height)] whitespace-nowrap [font-style:var(--title-group-font-style)]">
